@@ -1,3 +1,5 @@
+# kwajiehao.com
+
 # Initial Ideas
 
 I've wanted to create a personal blog for ages. But the Procrastination Monster has kept me at bay for a while, aided by the strategic landscape of Inertia.
@@ -45,3 +47,6 @@ I don't think this has to be too complicated. There are no viewers for my blog a
 1. Think of a color palette for the blog
 2. Add automated linting and formatting
 3. Decide on routing strategy for React
+4. Add .nvmrc and .npmrc
+5. Set up www subdomain for Github pages
+6. Think about technical design for home library on my personal page
