@@ -11,6 +11,5 @@ Random ideas for the blog that are not meant to be futureproof:
 4. It should be compatible with all screen sizes, but designed for personal computers because photos look better on a larger screen
 5. Content should be categorized (with tags for e.g.) and easily searchable
 
-I was creating a repo on Github and there was an option for licensing. Not sure why relevant, but the general advice seems to be: 
-- MIT for open-source code
-- [CC-BY-ND-NC](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en) for blog content to ensure that it doesn't get monetized by someone else
+# License
+[CC-BY-ND-NC](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en)
