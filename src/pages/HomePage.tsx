@@ -12,7 +12,6 @@ export function HomePage() {
   return (
     <Layout>
       <section class="py-12">
-        <h1 class="text-3xl font-bold mb-2">Hi, I'm Jie Hao</h1>
         <p class="text-[var(--color-muted)] leading-relaxed mb-8">
           Welcome to my corner of the internet. I write about engineering, AI, and things I find interesting.
         </p>

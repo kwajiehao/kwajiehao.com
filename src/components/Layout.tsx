@@ -27,7 +27,7 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div class="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-200">
       <header class="w-full max-w-[700px] mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
-        <a href="/" class="text-lg font-semibold hover:text-[var(--color-accent)] transition-colors shrink-0">
+        <a href="/" class="text-lg font-semibold text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors shrink-0">
           Kwa Jie Hao
         </a>
         <nav class="flex items-center gap-4 sm:gap-6 text-sm">
