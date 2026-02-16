@@ -52,12 +52,12 @@ export default function rssFeedPlugin(): Plugin {
         .sort((a, b) => b.date.getTime() - a.date.getTime())
 
       const feed = new Feed({
-        title: "kwajiehao's blog",
+        title: "Kwa Jie Hao's blog",
         description: 'Thoughts on engineering, AI, and things I find interesting.',
         id: SITE_URL,
         link: SITE_URL,
         language: 'en',
-        copyright: `All rights reserved ${new Date().getFullYear()}, kwajiehao`,
+        copyright: `All rights reserved ${new Date().getFullYear()}, Kwa Jie Hao`,
         updated: visiblePosts[0]?.date || new Date(),
       })
 

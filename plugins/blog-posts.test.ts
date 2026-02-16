@@ -48,6 +48,8 @@ describe('validateFrontmatter', () => {
     expect(() => validateFrontmatter(data, 'test.md')).not.toThrow()
   })
 
+
+
   it('throws on missing title', () => {
     const { title: _, ...data } = validData
     expect(() => validateFrontmatter(data, 'test.md')).toThrow('Missing required frontmatter field "title"')

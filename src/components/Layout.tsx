@@ -28,7 +28,7 @@ export function Layout({ children }: LayoutProps) {
     <div class="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-200">
       <header class="w-full max-w-[700px] mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
         <a href="/" class="text-lg font-semibold hover:text-[var(--color-accent)] transition-colors shrink-0">
-          kwajiehao
+          Kwa Jie Hao
         </a>
         <nav class="flex items-center gap-4 sm:gap-6 text-sm">
           <NavLink href="/blog">Blog</NavLink>
@@ -55,7 +55,7 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <footer class="w-full max-w-[700px] mx-auto px-6 py-8 text-sm text-[var(--color-muted)] flex justify-between">
-        <span>&copy; {new Date().getFullYear()} kwajiehao</span>
+        <span>&copy; {new Date().getFullYear()} Kwa Jie Hao</span>
         <a href="/feed.xml" class="hover:text-[var(--color-accent)] transition-colors">RSS</a>
       </footer>
     </div>
