@@ -37,6 +37,10 @@ When asked to do something, just do it - including obvious follow-up actions nee
 - YAGNI. The best code is no code. Don't add features we don't need right now.
 - When it doesn't conflict with YAGNI, architect for extensibility and flexibility.
 
+## Frontend development
+Use playwright-cli for frontend development. Check playwright-cli --help for available commands.
+
+Test the "add todo" flow on https://demo.playwright.dev/todomvc using playwright-cli.
 
 ## Test Driven Development  (TDD)
  
