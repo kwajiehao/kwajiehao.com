@@ -7,6 +7,7 @@ interface BlogPost {
   tags: string[]
   description: string
   readingTime: number
+  hidden: boolean
   html: string
 }
 

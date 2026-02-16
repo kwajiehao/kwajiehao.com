@@ -21,6 +21,7 @@ export interface PostData {
   tags: string[]
   description: string
   readingTime: number
+  hidden: boolean
   html: string
 }
 
@@ -76,6 +77,7 @@ async function processPostFile(
     tags: data.tags as string[],
     description: data.description as string,
     readingTime,
+    hidden: data.hidden === true,
     html: html as string,
   }
 }
@@ -131,7 +133,8 @@ export default function blogPostsPlugin(): Plugin {
       }
       if (id === RESOLVED_TAGS) {
         const posts = await loadAllPosts(postsDir, marked)
-        const tagMap = buildTagMap(posts)
+        const visiblePosts = posts.filter((p) => !p.hidden)
+        const tagMap = buildTagMap(visiblePosts)
         return `export default ${JSON.stringify(tagMap)}`
       }
     },

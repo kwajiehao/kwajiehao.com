@@ -41,12 +41,15 @@ export default function rssFeedPlugin(): Plugin {
             date: new Date(data.date as string),
             description: data.description as string,
             slug: data.slug as string,
+            hidden: data.hidden === true,
             html: html as string,
           }
         }),
       )
 
-      posts.sort((a, b) => b.date.getTime() - a.date.getTime())
+      const visiblePosts = posts
+        .filter((p) => !p.hidden)
+        .sort((a, b) => b.date.getTime() - a.date.getTime())
 
       const feed = new Feed({
         title: "kwajiehao's blog",
@@ -55,10 +58,10 @@ export default function rssFeedPlugin(): Plugin {
         link: SITE_URL,
         language: 'en',
         copyright: `All rights reserved ${new Date().getFullYear()}, kwajiehao`,
-        updated: posts[0]?.date || new Date(),
+        updated: visiblePosts[0]?.date || new Date(),
       })
 
-      for (const post of posts) {
+      for (const post of visiblePosts) {
         feed.addItem({
           title: post.title,
           id: `${SITE_URL}/blog/${post.slug}`,

@@ -3,12 +3,12 @@
 
 /* Light theme (default) */
 :root {
-  --color-bg: #f9f6f2;
+  --color-bg: #f0e6d6;
   --color-text: #2d2d2d;
   --color-accent: #b85c38;
   --color-muted: #7a7067;
-  --color-code-bg: #f0ebe4;
-  --color-border: #e0d8ce;
+  --color-code-bg: #e8dcc8;
+  --color-border: #d9ccb8;
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;

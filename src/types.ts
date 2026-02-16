@@ -8,6 +8,7 @@ export interface Post {
   tags: string[]
   description: string
   readingTime: number
+  hidden: boolean
   html: string
 }
 

@@ -1,9 +1,10 @@
 ---
-title: "Hello World"
+title: "Lessons from vibe coding a "
 date: 2026-02-17
-tags: [meta, engineering]
+tags: [vibe-coding, engineering]
 description: "A first post to test the blog's markdown rendering capabilities."
 slug: hello-world
+hidden: true
 ---
 
 ## Welcome

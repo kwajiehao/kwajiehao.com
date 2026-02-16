@@ -9,8 +9,9 @@ export function Search() {
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const searchablePosts = posts.filter((p) => !p.hidden)
   const filtered = query.trim()
-    ? posts.filter((post) => {
+    ? searchablePosts.filter((post) => {
         const q = query.toLowerCase()
         return (
           post.title.toLowerCase().includes(q) ||

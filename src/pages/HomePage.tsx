@@ -6,7 +6,8 @@ import { PostCard } from '../components/PostCard.tsx'
 import posts from 'virtual:blog-posts'
 
 export function HomePage() {
-  const recentPosts = posts.slice(0, 5)
+  const visiblePosts = posts.filter((p) => !p.hidden)
+  const recentPosts = visiblePosts.slice(0, 5)
 
   return (
     <Layout>
@@ -21,7 +22,7 @@ export function HomePage() {
             {recentPosts.map((post) => (
               <PostCard key={post.slug} post={post} />
             ))}
-            {posts.length > 5 && (
+            {visiblePosts.length > 5 && (
               <a href="/blog" class="inline-block mt-6 text-[var(--color-accent)] hover:opacity-80 transition-opacity">
                 View all posts &rarr;
               </a>
