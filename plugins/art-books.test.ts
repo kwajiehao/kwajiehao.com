@@ -8,7 +8,7 @@ describe('validateBookEntry', () => {
   const validEntry = {
     slug: 'tokyo-nobody',
     title: 'Tokyo Nobody',
-    author: 'Masataka Nakano',
+    author: ['Masataka Nakano'],
     tags: ['photography', 'japanese'],
     dateAdded: '2026-02-21',
   }
@@ -132,21 +132,21 @@ describe('buildBookTagMap', () => {
     {
       slug: 'book-a',
       title: 'Book A',
-      author: 'Author A',
+      author: ['Author A'],
       tags: ['photography', 'japanese'],
       dateAdded: '2026-02-21',
     },
     {
       slug: 'book-b',
       title: 'Book B',
-      author: 'Author B',
+      author: ['Author B'],
       tags: ['photography', 'american'],
       dateAdded: '2026-02-20',
     },
     {
       slug: 'book-c',
       title: 'Book C',
-      author: 'Author C',
+      author: ['Author C'],
       tags: ['painting'],
       dateAdded: '2026-02-19',
     },

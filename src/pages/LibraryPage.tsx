@@ -5,6 +5,7 @@ import { useState, useMemo } from 'preact/hooks'
 import { Layout } from '../components/Layout.tsx'
 import { BookCard } from '../components/BookCard.tsx'
 import { BookFilterBar } from '../components/BookFilterBar.tsx'
+import { BookModal } from '../components/BookModal.tsx'
 import type { Book } from '../types.ts'
 import books from 'virtual:art-books'
 import bookTags from 'virtual:art-book-tags'
@@ -15,7 +16,7 @@ function sortBooks(items: Book[], field: string): Book[] {
     case 'title':
       return sorted.sort((a, b) => a.title.localeCompare(b.title))
     case 'author':
-      return sorted.sort((a, b) => a.author.localeCompare(b.author))
+      return sorted.sort((a, b) => a.author[0].localeCompare(b.author[0]))
     case 'year':
       return sorted.sort((a, b) => (b.year ?? 0) - (a.year ?? 0))
     case 'dateAdded':
@@ -27,6 +28,7 @@ function sortBooks(items: Book[], field: string): Book[] {
 export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
   const [sortField, setSortField] = useState('dateAdded')
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
 
@@ -71,10 +73,20 @@ export function LibraryPage() {
             <p class="text-[var(--color-muted)] col-span-full">No books match the selected filters.</p>
           ) : (
             filteredBooks.map((book) => (
-              <BookCard key={book.slug} book={book} onTagClick={handleTagToggle} />
+              <BookCard key={book.slug} book={book} onTagClick={handleTagToggle} onClick={() => setSelectedBook(book)} />
             ))
           )}
         </div>
+        {selectedBook && (
+          <BookModal
+            book={selectedBook}
+            onClose={() => setSelectedBook(null)}
+            onTagClick={(tag) => {
+              setSelectedBook(null)
+              handleTagToggle(tag)
+            }}
+          />
+        )}
       </section>
     </Layout>
   )

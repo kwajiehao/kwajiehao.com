@@ -1,26 +1,39 @@
-- slug: tokyo-nobody
-  title: Tokyo Nobody
-  author: Masataka Nakano
-  year: 2000
-  publisher: KGS
-  tags: [photography, japanese, urban]
-  description: Eerily empty Tokyo landscapes photographed at dawn over a decade.
+- slug: waga-tokyo-100
+  title: Waga Tokyo 100 (わが東京１００)
+  author: [Issei Suda]
+  year: 2013
+  publisher: Zen Foto Gallery
+  tags: [photography, japan]
+  description: Issei Suda is one of my favorite photographers. In this book, he captures scenes candid and surreal in late-1970s Shitamachi Tokyo, where he grew up. Kind of like an artsier version of Humans of New York, but back in the day.
   dateAdded: "2026-02-21"
+  coverImage: https://d1jikcjf8oridj.cloudfront.net/i/72/3H5NLjA_2OacEF.jpg
 
-- slug: sleeping-by-the-mississippi
-  title: Sleeping by the Mississippi
-  author: Alec Soth
-  year: 2004
-  publisher: Steidl
-  tags: [photography, american, landscape]
-  description: Lyrical portraits and landscapes along the Mississippi River.
-  dateAdded: "2026-02-15"
+- slug: journey-to-osorezan
+  title: The Journey to Osorezan (恐山へ)
+  author: [Issei Suda]
+  year: 2013
+  publisher: Zen Foto Gallery
+  tags: [photography, japan]
+  description: Osorezan is a mountain near the tip of Aomori which represents a gateway to the underworld. The photos here bear Issei Suda's trademark surrealism laced with palpable tension from the mystical mountain.
+  dateAdded: "2026-02-21"
+  coverImage: https://d1jikcjf8oridj.cloudfront.net/i/a6/PDyd5tn_2Tb7nx.jpg
 
-- slug: paintings-of-japanese-tea-gardens
-  title: The Art of the Japanese Garden
-  author: David Young
+- slug: tiananmen-1989
+  title: Tiananmen 1989 - Our Shattered Hopes
+  author: [Lun Zhang, Adrien Gombeaud, Ameziane]
+  year: 2018
+  publisher: IDW
+  tags: [graphic-novel, china, politics]
+  description: A riveting account of what happened in Tiananmen from the POV of Lun Zhang, a sociology professor who helped organize student safety during the protests.
+  dateAdded: "2026-02-21"
+  coverImage: https://m.media-amazon.com/images/I/71z21eDPUZL._AC_UF1000,1000_QL80_.jpg
+
+- slug: magnum-contact-sheets
+  title: Magnum Contact Sheets
+  author: Kristen Lubben
   year: 2005
-  publisher: Tuttle
-  tags: [painting, japanese, nature]
-  description: Traditional Japanese garden aesthetics through painting and photography.
-  dateAdded: "2026-02-10"
+  publisher: Magnum
+  tags: [photography]
+  description: Photographers are highly secretive about the actual photos they take, preferring only to show you the final product. As such, I see Magnum Contact Sheets as a treasure trove of lessons from some of the best photographers in history.
+  dateAdded: "2026-02-21"
+  coverImage: https://m.media-amazon.com/images/I/815CI-Cn8LL.jpg

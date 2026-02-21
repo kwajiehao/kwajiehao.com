@@ -24,7 +24,7 @@ declare module 'virtual:blog-tags' {
 interface ArtBook {
   slug: string
   title: string
-  author: string
+  author: string[]
   coverImage?: string
   year?: number
   publisher?: string

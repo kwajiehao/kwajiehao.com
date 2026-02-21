@@ -2,7 +2,7 @@
 title: "Life in Color"
 slug: life-in-color
 date: 2026-02-22
-cover: /photos/life-in-color/southern-france-train.jpeg
+cover: https://photos.kwajiehao.com/life-in-color/southern-france-train.jpeg
 layout: grid
 hidden: false
 images:

@@ -15,7 +15,7 @@ const RESOLVED_BOOK_TAGS = '\0' + VIRTUAL_BOOK_TAGS
 export interface BookData {
   slug: string
   title: string
-  author: string
+  author: string[]
   coverImage?: string
   year?: number
   publisher?: string
@@ -50,7 +50,7 @@ export function parseBooks(content: string): BookData[] {
     return {
       slug: entry.slug as string,
       title: entry.title as string,
-      author: entry.author as string,
+      author: Array.isArray(entry.author) ? entry.author as string[] : [entry.author as string],
       coverImage: entry.coverImage as string | undefined,
       year: entry.year as number | undefined,
       publisher: entry.publisher as string | undefined,
