@@ -31,7 +31,6 @@ export function PhotosPage() {
                 </div>
                 <div class="mt-2">
                   <h2 class="text-sm font-medium">{collection.title}</h2>
-                  <p class="text-xs text-[var(--color-muted)]">{collection.date}</p>
                 </div>
               </a>
             ))}

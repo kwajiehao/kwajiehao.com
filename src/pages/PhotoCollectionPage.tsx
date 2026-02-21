@@ -1,5 +1,5 @@
 // ABOUTME: Individual photo collection page with gallery viewer.
-// ABOUTME: Shows title, optional description, and horizontal-scroll gallery.
+// ABOUTME: Shows title and square grid gallery with theater view.
 
 import { useRoute } from 'preact-iso'
 import { Layout } from '../components/Layout.tsx'
@@ -37,12 +37,7 @@ export function PhotoCollectionPage() {
         <a href="/photos" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors">
           &larr; Photos
         </a>
-        <h1 class="text-2xl font-semibold mt-4 mb-2">{collection.title}</h1>
-        <p class="text-sm text-[var(--color-muted)] mb-6">{collection.date}</p>
-
-        {collection.html && (
-          <div class="prose mb-8 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: collection.html }} />
-        )}
+        <h1 class="text-2xl font-semibold mt-4 mb-6">{collection.title}</h1>
 
         <PhotoGallery images={collection.images} layout={collection.layout} />
 

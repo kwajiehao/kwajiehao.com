@@ -60,3 +60,48 @@ heroImage: /photos/japan-2024/cover.jpg
 
 - **grid** — 2x2 images per page on desktop, 2 stacked images per page on mobile. Good for collections with many images.
 - **single** — One full-width image per page. Good for landscape/panoramic shots or smaller curated sets.
+
+## Adding Books to the Library
+
+The library page (`/library`) displays a catalog of art books with tag-based filtering and sorting.
+
+### How it works
+
+Books are defined in `content/books.yaml` as a YAML array. A Vite plugin (`plugins/art-books.ts`) parses and validates the YAML at build time, producing two virtual modules:
+
+- `virtual:art-books` — all books sorted by `dateAdded` (newest first)
+- `virtual:art-book-tags` — map of tag name to books with that tag
+
+The `/library` page imports these modules and provides client-side tag filtering (AND semantics — selecting multiple tags shows only books matching all of them) and sorting by date added, title, author, or year.
+
+The dev server watches `content/books.yaml` for changes and hot-reloads automatically.
+
+### Adding a book
+
+Add an entry to `content/books.yaml`:
+
+```yaml
+- slug: my-book
+  title: My Book Title
+  author: Author Name
+  tags: [photography, landscape]
+  dateAdded: "2026-02-22"
+  year: 2020
+  publisher: Publisher Name
+  coverImage: /photos/my-book/cover.jpg
+  description: A short description of the book.
+```
+
+### Fields
+
+| Field | Required | Description |
+|---|---|---|
+| `slug` | yes | URL-safe unique identifier |
+| `title` | yes | Display name |
+| `author` | yes | Author name |
+| `tags` | yes | Array of tag strings (used for filtering) |
+| `dateAdded` | yes | Date added in `YYYY-MM-DD` format |
+| `year` | no | Publication year |
+| `publisher` | no | Publisher name |
+| `coverImage` | no | Path to cover image (falls back to a placeholder with author initials) |
+| `description` | no | Short text description |
