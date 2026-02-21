@@ -13,3 +13,17 @@ export interface Post {
 }
 
 export type TagMap = Record<string, Post[]>
+
+export interface Book {
+  slug: string
+  title: string
+  author: string
+  coverImage?: string
+  year?: number
+  publisher?: string
+  tags: string[]
+  description?: string
+  dateAdded: string
+}
+
+export type BookTagMap = Record<string, Book[]>

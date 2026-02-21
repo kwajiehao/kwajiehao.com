@@ -19,6 +19,7 @@ Defined in `src/app.tsx`:
 | `/` | HomePage | Landing page with intro + 5 most recent posts |
 | `/blog` | BlogListPage | All posts, reverse chronological |
 | `/blog/:slug` | PostPage | Individual post with rendered markdown |
+| `/library` | LibraryPage | Art book catalog with tag filtering and sorting |
 | `/tags` | TagIndexPage | All tags with post counts |
 | `/tags/:tag` | TagPage | Posts filtered by tag |
 | `/about` | AboutPage | Static bio |
@@ -30,13 +31,15 @@ src/
 ├── main.tsx              # Entry point (hydration + prerender export)
 ├── app.tsx               # Route definitions
 ├── index.css             # Global styles + theme CSS variables
-├── types.ts              # Shared types (Post, TagMap)
+├── types.ts              # Shared types (Post, TagMap, Book, BookTagMap)
 ├── vite-env.d.ts         # Virtual module type declarations
 ├── components/
 │   ├── Layout.tsx        # Site shell: header, nav, footer, theme toggle
 │   ├── ThemeToggle.tsx   # Dark/light mode switcher
 │   ├── PostCard.tsx      # Blog post summary card
 │   ├── TagBadge.tsx      # Clickable tag pill
+│   ├── BookCard.tsx      # Art book card with cover image/placeholder
+│   ├── BookFilterBar.tsx # Tag filter pills, sort dropdown, result count
 │   └── Search.tsx        # Client-side search overlay ("/" shortcut)
 └── pages/
     ├── HomePage.tsx
@@ -44,13 +47,17 @@ src/
     ├── PostPage.tsx
     ├── TagIndexPage.tsx
     ├── TagPage.tsx
-    └── AboutPage.tsx
+    ├── AboutPage.tsx
+    └── LibraryPage.tsx   # Art book catalog with filtering and sorting
 plugins/
 ├── blog-posts.ts         # Vite plugin: virtual:blog-posts & virtual:blog-tags
 ├── blog-posts.test.ts
+├── art-books.ts          # Vite plugin: virtual:art-books & virtual:art-book-tags
+├── art-books.test.ts
 └── rss-feed.ts           # Generates dist/feed.xml at build time
 content/
-└── posts/                # Markdown blog posts with YAML frontmatter
+├── posts/                # Markdown blog posts with YAML frontmatter
+└── books.yaml            # Art book catalog (YAML array of Book entries)
 ```
 
 ## Content Pipeline
@@ -73,6 +80,16 @@ A custom Vite plugin (`plugins/blog-posts.ts`) exposes two virtual modules:
 - `virtual:blog-tags` — map of tag name → posts
 
 Markdown is parsed with `marked`, syntax-highlighted with `shiki` (dual-theme), and frontmatter extracted with `gray-matter`. Reading time is calculated at `Math.max(1, Math.round(wordCount / 200))` minutes. The dev server watches `content/posts/` for hot reload.
+
+### Art books
+
+Art books are defined in `content/books.yaml` as a YAML array with required fields: `slug`, `title`, `author`, `tags`, `dateAdded`. Optional fields: `coverImage`, `year`, `publisher`, `description`.
+
+A custom Vite plugin (`plugins/art-books.ts`) exposes two virtual modules:
+- `virtual:art-books` — array of all books sorted by dateAdded descending
+- `virtual:art-book-tags` — map of tag name → books
+
+YAML is parsed with `js-yaml`. The dev server watches `content/books.yaml` for hot reload. The `/library` page provides client-side tag filtering (AND semantics) and sorting (dateAdded, title, author, year).
 
 ## Theme & Color System
 

@@ -1,0 +1,26 @@
+- slug: tokyo-nobody
+  title: Tokyo Nobody
+  author: Masataka Nakano
+  year: 2000
+  publisher: KGS
+  tags: [photography, japanese, urban]
+  description: Eerily empty Tokyo landscapes photographed at dawn over a decade.
+  dateAdded: "2026-02-21"
+
+- slug: sleeping-by-the-mississippi
+  title: Sleeping by the Mississippi
+  author: Alec Soth
+  year: 2004
+  publisher: Steidl
+  tags: [photography, american, landscape]
+  description: Lyrical portraits and landscapes along the Mississippi River.
+  dateAdded: "2026-02-15"
+
+- slug: paintings-of-japanese-tea-gardens
+  title: The Art of the Japanese Garden
+  author: David Young
+  year: 2005
+  publisher: Tuttle
+  tags: [painting, japanese, nature]
+  description: Traditional Japanese garden aesthetics through painting and photography.
+  dateAdded: "2026-02-10"

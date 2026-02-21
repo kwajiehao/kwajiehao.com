@@ -41,12 +41,3 @@ Given the performance advantages, my simple use case, and the almost identical d
 ## 2. Hosting
 
 I don't think this has to be too complicated. There are no viewers for my blog and thus no non-functional requirements in terms of scale. I'm just going to go with Cloudflare Pages because my domain is with Cloudflare and it's more performant for media than GitHub Pages.
-
-# To-Dos 
-
-1. Think of a color palette for the blog
-2. Add automated linting and formatting
-3. Decide on routing strategy for React
-4. Add .nvmrc and .npmrc
-5. Set up www subdomain for Github pages
-6. Think about technical design for home library on my personal page

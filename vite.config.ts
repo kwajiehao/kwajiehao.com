@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import tailwindcss from '@tailwindcss/vite'
 import blogPosts from './plugins/blog-posts.ts'
+import artBooks from './plugins/art-books.ts'
 import rssFeed from './plugins/rss-feed.ts'
 
 export default defineConfig({
@@ -17,6 +18,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     blogPosts(),
+    artBooks(),
     rssFeed(),
   ],
   base: '/',

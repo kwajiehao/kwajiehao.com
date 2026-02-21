@@ -32,6 +32,7 @@ export function Layout({ children }: LayoutProps) {
         </a>
         <nav class="flex items-center gap-4 sm:gap-6 text-sm">
           <NavLink href="/blog">Blog</NavLink>
+          <NavLink href="/library">Library</NavLink>
           <NavLink href="/tags">Tags</NavLink>
           <NavLink href="/about">About</NavLink>
           <a
