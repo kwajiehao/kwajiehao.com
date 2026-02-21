@@ -53,7 +53,7 @@ export function LibraryPage() {
   const handleClearTags = () => setActiveTags(new Set())
 
   return (
-    <Layout>
+    <Layout maxWidth="wide">
       <section class="py-12">
         <h1 class="text-3xl font-bold mb-8">Library</h1>
         <BookFilterBar
@@ -66,7 +66,7 @@ export function LibraryPage() {
           visibleCount={filteredBooks.length}
           totalCount={books.length}
         />
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8">
           {filteredBooks.length === 0 ? (
             <p class="text-[var(--color-muted)] col-span-full">No books match the selected filters.</p>
           ) : (

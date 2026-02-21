@@ -18,7 +18,7 @@ function CoverPlaceholder({ title }: { title: string }) {
 
   return (
     <div class="w-full aspect-square bg-[var(--color-accent)] flex items-center justify-center">
-      <span class="text-3xl font-bold text-white opacity-80">{initials}</span>
+      <span class="text-2xl font-bold text-white opacity-80">{initials}</span>
     </div>
   )
 }
@@ -42,13 +42,13 @@ export function BookCard({ book, onTagClick }: BookCardProps) {
       ) : (
         <CoverPlaceholder title={book.title} />
       )}
-      <div class="p-4">
-        <h3 class="text-lg font-semibold leading-snug">{book.title}</h3>
-        <p class="text-sm text-[var(--color-muted)] mt-1">{book.author}</p>
+      <div class="p-3">
+        <h3 class="text-sm font-semibold leading-snug">{book.title}</h3>
+        <p class="text-xs text-[var(--color-muted)] mt-1">{book.author}</p>
         {metaParts.length > 0 && (
           <p class="text-xs text-[var(--color-muted)] mt-0.5">{metaParts.join(' · ')}</p>
         )}
-        <div class="flex flex-wrap gap-1.5 mt-3">
+        <div class="flex flex-wrap gap-1 mt-2">
           {book.tags.map((tag) => (
             <button
               key={tag}
@@ -57,14 +57,14 @@ export function BookCard({ book, onTagClick }: BookCardProps) {
                 e.preventDefault()
                 onTagClick?.(tag)
               }}
-              class="inline-block text-xs px-2 py-0.5 rounded-full bg-[var(--color-code-bg)] text-[var(--color-accent)] hover:opacity-80 transition-opacity cursor-pointer"
+              class="inline-block text-xs px-1.5 py-0.5 rounded-full bg-[var(--color-code-bg)] text-[var(--color-accent)] hover:opacity-80 transition-opacity cursor-pointer"
             >
               {tag}
             </button>
           ))}
         </div>
         {book.description && (
-          <p class="mt-3 text-sm text-[var(--color-muted)] leading-relaxed">{book.description}</p>
+          <p class="mt-2 text-xs text-[var(--color-muted)] leading-relaxed">{book.description}</p>
         )}
       </div>
     </article>
