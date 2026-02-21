@@ -3,12 +3,12 @@
 
 /* Light theme (default) */
 :root {
-  --color-bg: #f5f3f0;
-  --color-text: #2d2d2d;
-  --color-accent: #b85c38;
-  --color-muted: #8a8580;
-  --color-code-bg: #eae7e3;
-  --color-border: #dfdbd6;
+  --color-bg: #ECEAE8;
+  --color-text: #2D2D2D;
+  --color-accent: #7A6E66;
+  --color-muted: #9A938D;
+  --color-code-bg: #E2DFDC;
+  --color-border: #D5D2CE;
 
   font-family: 'IBM Plex Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -21,12 +21,12 @@
 
 /* Dark theme */
 [data-theme="dark"] {
-  --color-bg: #1c1917;
-  --color-text: #e7e0d8;
-  --color-accent: #d4896a;
-  --color-muted: #a39890;
-  --color-code-bg: #292420;
-  --color-border: #3a3330;
+  --color-bg: #161616;
+  --color-text: #E0DCDA;
+  --color-accent: #A89E96;
+  --color-muted: #7A746E;
+  --color-code-bg: #222222;
+  --color-border: #2E2E2E;
 }
 
 body, html {

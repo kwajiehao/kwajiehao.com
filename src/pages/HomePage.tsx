@@ -1,33 +1,20 @@
-// ABOUTME: Landing page with brief intro and recent posts.
-// ABOUTME: Shows the 5 most recent blog posts.
+// ABOUTME: Landing page with hero image.
+// ABOUTME: Displays a hero image configured in site.yaml.
 
 import { Layout } from '../components/Layout.tsx'
-import { PostCard } from '../components/PostCard.tsx'
-import posts from 'virtual:blog-posts'
+import siteConfig from 'virtual:site-config'
 
 export function HomePage() {
-  const visiblePosts = posts.filter((p) => !p.hidden)
-  const recentPosts = visiblePosts.slice(0, 5)
-
   return (
     <Layout>
       <section class="py-12">
-        <p class="text-[var(--color-muted)] leading-relaxed mb-8">
-          Welcome to my corner of the internet. I write about engineering, AI, and things I find interesting.
-        </p>
-        {recentPosts.length > 0 && (
-          <>
-            <h2 class="text-lg font-semibold mb-4">Recent Posts</h2>
-            {recentPosts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-            {visiblePosts.length > 5 && (
-              <a href="/blog" class="inline-block mt-6 text-[var(--color-accent)] hover:opacity-80 transition-opacity">
-                View all posts &rarr;
-              </a>
-            )}
-          </>
-        )}
+        <a href="/photos" class="block">
+          <img
+            src={siteConfig.heroImage}
+            alt=""
+            class="w-full max-h-[70vh] object-cover"
+          />
+        </a>
       </section>
     </Layout>
   )

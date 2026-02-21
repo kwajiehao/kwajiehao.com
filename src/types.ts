@@ -27,3 +27,19 @@ export interface Book {
 }
 
 export type BookTagMap = Record<string, Book[]>
+
+export interface PhotoCollection {
+  slug: string
+  title: string
+  date: string
+  cover: string
+  layout: 'grid' | 'single'
+  hidden: boolean
+  images: string[]
+  description?: string
+  html: string
+}
+
+export interface SiteConfig {
+  heroImage: string
+}

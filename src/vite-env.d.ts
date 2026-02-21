@@ -42,3 +42,29 @@ declare module 'virtual:art-book-tags' {
   const tags: Record<string, ArtBook[]>
   export default tags
 }
+
+interface PhotoCollectionData {
+  slug: string
+  title: string
+  date: string
+  cover: string
+  layout: 'grid' | 'single'
+  hidden: boolean
+  images: string[]
+  description?: string
+  html: string
+}
+
+declare module 'virtual:photo-collections' {
+  const collections: PhotoCollectionData[]
+  export default collections
+}
+
+interface SiteConfigData {
+  heroImage: string
+}
+
+declare module 'virtual:site-config' {
+  const config: SiteConfigData
+  export default config
+}

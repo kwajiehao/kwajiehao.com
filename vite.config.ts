@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite'
 import blogPosts from './plugins/blog-posts.ts'
 import artBooks from './plugins/art-books.ts'
 import rssFeed from './plugins/rss-feed.ts'
+import photoCollections from './plugins/photo-collections.ts'
+import siteConfig from './plugins/site-config.ts'
 
 export default defineConfig({
   plugins: [
@@ -19,6 +21,8 @@ export default defineConfig({
     tailwindcss(),
     blogPosts(),
     artBooks(),
+    photoCollections(),
+    siteConfig(),
     rssFeed(),
   ],
   base: '/',

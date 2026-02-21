@@ -8,6 +8,12 @@ import { Search } from './Search.tsx'
 
 interface LayoutProps {
   children: ComponentChildren
+  maxWidth?: 'narrow' | 'wide'
+}
+
+const maxWidthClasses = {
+  narrow: 'max-w-[900px]',
+  wide: 'max-w-[1100px]',
 }
 
 function NavLink({ href, children }: { href: string; children: ComponentChildren }) {
@@ -23,16 +29,19 @@ function NavLink({ href, children }: { href: string; children: ComponentChildren
   )
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, maxWidth = 'narrow' }: LayoutProps) {
+  const widthClass = maxWidthClasses[maxWidth]
+
   return (
     <div class="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-200">
-      <header class="w-full max-w-[700px] mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+      <header class={`w-full ${widthClass} mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap`}>
         <a href="/" class="text-lg font-semibold text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors shrink-0">
           Kwa Jie Hao
         </a>
         <nav class="flex items-center gap-4 sm:gap-6 text-sm">
           <NavLink href="/blog">Blog</NavLink>
           <NavLink href="/library">Library</NavLink>
+          <NavLink href="/photos">Photos</NavLink>
           <NavLink href="/tags">Tags</NavLink>
           <NavLink href="/about">About</NavLink>
           <a
@@ -52,10 +61,10 @@ export function Layout({ children }: LayoutProps) {
           <ThemeToggle />
         </nav>
       </header>
-      <main class="w-full max-w-[700px] mx-auto px-6 flex-1">
+      <main class={`w-full ${widthClass} mx-auto px-6 flex-1`}>
         {children}
       </main>
-      <footer class="w-full max-w-[700px] mx-auto px-6 py-8 text-sm text-[var(--color-muted)] flex justify-between">
+      <footer class={`w-full ${widthClass} mx-auto px-6 py-8 text-sm text-[var(--color-muted)] flex justify-between`}>
         <span>&copy; {new Date().getFullYear()} Kwa Jie Hao</span>
         <a href="/feed.xml" class="hover:text-[var(--color-accent)] transition-colors">RSS</a>
       </footer>
