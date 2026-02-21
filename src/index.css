@@ -3,12 +3,12 @@
 
 /* Light theme (default) */
 :root {
-  --color-bg: #ECEAE8;
+  --color-bg: #EAEEEE;
   --color-text: #2D2D2D;
-  --color-accent: #7A6E66;
-  --color-muted: #9A938D;
-  --color-code-bg: #E2DFDC;
-  --color-border: #D5D2CE;
+  --color-accent: #6A7070;
+  --color-muted: #6B6B6B;
+  --color-code-bg: #E0E4E4;
+  --color-border: #D2D6D6;
 
   font-family: 'IBM Plex Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;

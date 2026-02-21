@@ -136,7 +136,7 @@ function TheaterView({ images, index, onClose, onChange }: {
 
 function GridLayout({ images, onOpen }: { images: string[]; onOpen: (i: number) => void }) {
   return (
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
       {images.map((src, i) => (
         <button
           key={i}

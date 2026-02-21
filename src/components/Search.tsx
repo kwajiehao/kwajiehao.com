@@ -1,8 +1,33 @@
-// ABOUTME: Client-side search overlay that filters posts by title, tags, and description.
+// ABOUTME: Client-side search overlay that filters posts, books, and photos by title, tags, and description.
 // ABOUTME: Triggered by search icon in header or "/" keyboard shortcut.
 
 import { useState, useEffect, useRef } from 'preact/hooks'
 import posts from 'virtual:blog-posts'
+import books from 'virtual:art-books'
+import collections from 'virtual:photo-collections'
+
+interface PostResult {
+  type: 'post'
+  slug: string
+  title: string
+  subtitle: string
+}
+
+interface BookResult {
+  type: 'book'
+  slug: string
+  title: string
+  subtitle: string
+}
+
+interface PhotoResult {
+  type: 'photo'
+  slug: string
+  title: string
+  subtitle: string
+}
+
+type SearchResult = PostResult | BookResult | PhotoResult
 
 export function Search() {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,16 +35,61 @@ export function Search() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const searchablePosts = posts.filter((p) => !p.hidden)
-  const filtered = query.trim()
-    ? searchablePosts.filter((post) => {
-        const q = query.toLowerCase()
-        return (
-          post.title.toLowerCase().includes(q) ||
-          post.description.toLowerCase().includes(q) ||
-          post.tags.some((tag) => tag.toLowerCase().includes(q))
-        )
-      })
+  const searchableCollections = collections.filter((c) => !c.hidden)
+
+  const results: SearchResult[] = query.trim()
+    ? [
+        ...searchablePosts
+          .filter((post) => {
+            const q = query.toLowerCase()
+            return (
+              post.title.toLowerCase().includes(q) ||
+              post.description.toLowerCase().includes(q) ||
+              post.tags.some((tag) => tag.toLowerCase().includes(q))
+            )
+          })
+          .map((post): PostResult => ({
+            type: 'post',
+            slug: post.slug,
+            title: post.title,
+            subtitle: post.description,
+          })),
+        ...books
+          .filter((book) => {
+            const q = query.toLowerCase()
+            return (
+              book.title.toLowerCase().includes(q) ||
+              book.author.join(' ').toLowerCase().includes(q) ||
+              (book.description ?? '').toLowerCase().includes(q) ||
+              book.tags.some((tag) => tag.toLowerCase().includes(q))
+            )
+          })
+          .map((book): BookResult => ({
+            type: 'book',
+            slug: book.slug,
+            title: book.title,
+            subtitle: book.author.join(', '),
+          })),
+        ...searchableCollections
+          .filter((col) => {
+            const q = query.toLowerCase()
+            return (
+              col.title.toLowerCase().includes(q) ||
+              (col.description ?? '').toLowerCase().includes(q)
+            )
+          })
+          .map((col): PhotoResult => ({
+            type: 'photo',
+            slug: col.slug,
+            title: col.title,
+            subtitle: 'Photo collection',
+          })),
+      ]
     : []
+
+  const postResults = results.filter((r) => r.type === 'post')
+  const bookResults = results.filter((r) => r.type === 'book')
+  const photoResults = results.filter((r) => r.type === 'photo')
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -41,6 +111,39 @@ export function Search() {
       inputRef.current.focus()
     }
   }, [isOpen])
+
+  function hrefFor(result: SearchResult): string {
+    switch (result.type) {
+      case 'post':
+        return `/blog/${result.slug}`
+      case 'book':
+        return `/library?book=${result.slug}`
+      case 'photo':
+        return `/photos/${result.slug}`
+    }
+  }
+
+  function renderSection(label: string, items: SearchResult[]) {
+    if (items.length === 0) return null
+    return (
+      <>
+        <div class="px-4 py-2 text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider bg-[var(--color-code-bg)]">
+          {label}
+        </div>
+        {items.map((result) => (
+          <a
+            key={`${result.type}-${result.slug}`}
+            href={hrefFor(result)}
+            class="block px-4 py-3 hover:bg-[var(--color-code-bg)] transition-colors border-b border-[var(--color-border)] last:border-b-0"
+            onClick={() => { setIsOpen(false); setQuery('') }}
+          >
+            <div class="font-medium text-sm">{result.title}</div>
+            <div class="text-xs text-[var(--color-muted)] mt-1">{result.subtitle}</div>
+          </a>
+        ))}
+      </>
+    )
+  }
 
   if (!isOpen) {
     return (
@@ -68,27 +171,21 @@ export function Search() {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search posts... (Esc to close)"
+            placeholder="Search posts, books, photos... (Esc to close)"
             value={query}
             onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
             class="w-full px-4 py-3 bg-transparent text-[var(--color-text)] outline-none border-b border-[var(--color-border)] placeholder:text-[var(--color-muted)]"
           />
           {query.trim() && (
             <div class="max-h-80 overflow-y-auto">
-              {filtered.length === 0 ? (
+              {results.length === 0 ? (
                 <p class="px-4 py-3 text-sm text-[var(--color-muted)]">No results found.</p>
               ) : (
-                filtered.map((post) => (
-                  <a
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    class="block px-4 py-3 hover:bg-[var(--color-code-bg)] transition-colors border-b border-[var(--color-border)] last:border-b-0"
-                    onClick={() => { setIsOpen(false); setQuery('') }}
-                  >
-                    <div class="font-medium text-sm">{post.title}</div>
-                    <div class="text-xs text-[var(--color-muted)] mt-1">{post.description}</div>
-                  </a>
-                ))
+                <>
+                  {renderSection('Posts', postResults)}
+                  {renderSection('Books', bookResults)}
+                  {renderSection('Photos', photoResults)}
+                </>
               )}
             </div>
           )}

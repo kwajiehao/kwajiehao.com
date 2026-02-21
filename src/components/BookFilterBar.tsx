@@ -10,6 +10,8 @@ interface BookFilterBarProps {
   onSortChange: (field: string) => void
   visibleCount: number
   totalCount: number
+  searchQuery: string
+  onSearchChange: (query: string) => void
 }
 
 const sortOptions = [
@@ -28,11 +30,20 @@ export function BookFilterBar({
   onSortChange,
   visibleCount,
   totalCount,
+  searchQuery,
+  onSearchChange,
 }: BookFilterBarProps) {
-  const isFiltered = activeTags.size > 0
+  const isFiltered = activeTags.size > 0 || searchQuery.trim().length > 0
 
   return (
     <div class="space-y-4">
+      <input
+        type="text"
+        placeholder="Search by title, author..."
+        value={searchQuery}
+        onInput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
+        class="w-full px-3 py-2 text-sm bg-transparent border border-[var(--color-border)] rounded text-[var(--color-text)] outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] transition-colors"
+      />
       <div class="flex flex-wrap gap-2">
         {allTags.map((tag) => {
           const isActive = activeTags.has(tag)

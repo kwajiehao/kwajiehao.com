@@ -52,7 +52,6 @@ export function Layout({ children, maxWidth = 'narrow' }: LayoutProps) {
             <NavLink href="/blog">Blog</NavLink>
             <NavLink href="/library">Library</NavLink>
             <NavLink href="/photos">Photos</NavLink>
-            <NavLink href="/tags">Tags</NavLink>
             <NavLink href="/about">About</NavLink>
             <a
               href="https://instagram.com/oaheijawk"
@@ -97,7 +96,6 @@ export function Layout({ children, maxWidth = 'narrow' }: LayoutProps) {
             <NavLink href="/blog">Blog</NavLink>
             <NavLink href="/library">Library</NavLink>
             <NavLink href="/photos">Photos</NavLink>
-            <NavLink href="/tags">Tags</NavLink>
             <NavLink href="/about">About</NavLink>
             <div class="flex items-center gap-4 pt-2">
               <a

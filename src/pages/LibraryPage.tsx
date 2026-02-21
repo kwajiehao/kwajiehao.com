@@ -29,16 +29,31 @@ export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
   const [sortField, setSortField] = useState('dateAdded')
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
 
   const filteredBooks = useMemo(() => {
-    if (activeTags.size === 0) return sortBooks(books, sortField)
-    const filtered = books.filter((book) =>
-      [...activeTags].every((tag) => book.tags.includes(tag)),
-    )
-    return sortBooks(filtered, sortField)
-  }, [activeTags, sortField])
+    let result = books
+
+    if (activeTags.size > 0) {
+      result = result.filter((book) =>
+        [...activeTags].every((tag) => book.tags.includes(tag)),
+      )
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase()
+      result = result.filter((book) =>
+        book.title.toLowerCase().includes(q) ||
+        book.author.some((a) => a.toLowerCase().includes(q)) ||
+        (book.publisher ?? '').toLowerCase().includes(q) ||
+        (book.description ?? '').toLowerCase().includes(q),
+      )
+    }
+
+    return sortBooks(result, sortField)
+  }, [activeTags, sortField, searchQuery])
 
   const handleTagToggle = (tag: string) => {
     setActiveTags((prev) => {
@@ -52,7 +67,10 @@ export function LibraryPage() {
     })
   }
 
-  const handleClearTags = () => setActiveTags(new Set())
+  const handleClearFilters = () => {
+    setActiveTags(new Set())
+    setSearchQuery('')
+  }
 
   return (
     <Layout maxWidth="wide">
@@ -62,13 +80,15 @@ export function LibraryPage() {
           allTags={allTags}
           activeTags={activeTags}
           onTagToggle={handleTagToggle}
-          onClearTags={handleClearTags}
+          onClearTags={handleClearFilters}
           sortField={sortField}
           onSortChange={setSortField}
           visibleCount={filteredBooks.length}
           totalCount={books.length}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8">
           {filteredBooks.length === 0 ? (
             <p class="text-[var(--color-muted)] col-span-full">No books match the selected filters.</p>
           ) : (

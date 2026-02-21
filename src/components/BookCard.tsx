@@ -20,7 +20,7 @@ export function BookCard({ book, onTagClick, onClick }: BookCardProps) {
       onClick={onClick}
     >
       {book.coverImage ? (
-        <div class="w-full h-[220px] bg-[var(--color-code-bg)] flex items-center justify-center flex-shrink-0">
+        <div class="w-full h-[220px] flex items-center justify-center flex-shrink-0">
           <img
             src={book.coverImage}
             alt={`Cover of ${book.title}`}
@@ -35,7 +35,7 @@ export function BookCard({ book, onTagClick, onClick }: BookCardProps) {
           </span>
         </div>
       )}
-      <div class="p-3 h-[200px] flex flex-col overflow-hidden">
+      <div class="px-6 py-4 h-[200px] flex flex-col overflow-hidden">
         <h3 class="text-sm font-semibold leading-snug h-[2.5rem] line-clamp-2">{book.title}</h3>
         <p class="text-xs text-[var(--color-muted)] mt-1 truncate">{book.author.join(', ')}</p>
         <p class="text-xs text-[var(--color-muted)] mt-0.5">{metaParts.length > 0 ? metaParts.join(' · ') : '\u00A0'}</p>
