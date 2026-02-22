@@ -10,7 +10,7 @@ describe('getResponsiveImageAttrs', () => {
     )
 
     expect(result.src).toBe(
-      'https://photos.kwajiehao.com/life-in-color/paris-gallery.jpeg'
+      'https://photos.kwajiehao.com/life-in-color/paris-gallery-400.webp'
     )
     expect(result.srcSet).toBe(
       'https://photos.kwajiehao.com/life-in-color/paris-gallery-400.webp 400w, ' +
@@ -26,7 +26,7 @@ describe('getResponsiveImageAttrs', () => {
     )
 
     expect(result.src).toBe(
-      'https://photos.kwajiehao.com/collection/photo.png'
+      'https://photos.kwajiehao.com/collection/photo-400.webp'
     )
     expect(result.srcSet).toBe(
       'https://photos.kwajiehao.com/collection/photo-400.webp 400w, ' +
@@ -58,7 +58,7 @@ describe('getResponsiveImageAttrs', () => {
     )
 
     expect(result.src).toBe(
-      'https://photos.kwajiehao.com/trip/my.photo.name.jpeg'
+      'https://photos.kwajiehao.com/trip/my.photo.name-400.webp'
     )
     expect(result.srcSet).toBe(
       'https://photos.kwajiehao.com/trip/my.photo.name-400.webp 400w, ' +
@@ -74,7 +74,7 @@ describe('getResponsiveImageAttrs', () => {
     )
 
     expect(result.src).toBe(
-      'https://photos.kwajiehao.com/collection/photo.webp'
+      'https://photos.kwajiehao.com/collection/photo-400.webp'
     )
     expect(result.srcSet).toBe(
       'https://photos.kwajiehao.com/collection/photo-400.webp 400w, ' +

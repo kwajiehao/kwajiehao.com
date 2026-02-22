@@ -21,5 +21,5 @@ export function getResponsiveImageAttrs(url: string): ResponsiveImageAttrs {
     .map((w) => `${base}-${w}.webp ${w}w`)
     .join(', ')
 
-  return { src: url, srcSet }
+  return { src: `${base}-400.webp`, srcSet }
 }
