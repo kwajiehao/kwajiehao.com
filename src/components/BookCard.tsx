@@ -1,5 +1,5 @@
 // ABOUTME: Card component for displaying a book in the library grid.
-// ABOUTME: Fixed-height card with truncated description; clicking opens a detail modal.
+// ABOUTME: Fixed-height card with truncated notes preview; clicking opens a detail modal.
 
 import type { Book } from '../types.ts'
 
@@ -54,8 +54,8 @@ export function BookCard({ book, onTagClick, onClick }: BookCardProps) {
             </button>
           ))}
         </div>
-        {book.description && (
-          <p class="mt-2 text-xs text-[var(--color-muted)] leading-relaxed line-clamp-2">{book.description}</p>
+        {book.notes && book.notes.length > 0 && (
+          <p class="mt-2 text-xs text-[var(--color-muted)] leading-relaxed line-clamp-2">{book.notes[0].text}</p>
         )}
       </div>
     </article>

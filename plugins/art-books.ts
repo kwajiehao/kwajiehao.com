@@ -12,6 +12,11 @@ const VIRTUAL_BOOK_TAGS = 'virtual:art-book-tags'
 const RESOLVED_BOOKS = '\0' + VIRTUAL_BOOKS
 const RESOLVED_BOOK_TAGS = '\0' + VIRTUAL_BOOK_TAGS
 
+export interface BookNoteData {
+  date: string
+  text: string
+}
+
 export interface BookData {
   slug: string
   title: string
@@ -20,7 +25,7 @@ export interface BookData {
   year?: number
   publisher?: string
   tags: string[]
-  description?: string
+  notes?: BookNoteData[]
   dateAdded: string
 }
 
@@ -55,7 +60,9 @@ export function parseBooks(content: string): BookData[] {
       year: entry.year as number | undefined,
       publisher: entry.publisher as string | undefined,
       tags: entry.tags as string[],
-      description: entry.description as string | undefined,
+      notes: Array.isArray(entry.notes)
+        ? (entry.notes as { date: string; text: string }[]).map((n) => ({ date: n.date as string, text: n.text as string }))
+        : undefined,
       dateAdded: entry.dateAdded as string,
     }
   })

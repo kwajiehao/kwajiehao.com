@@ -29,7 +29,7 @@ interface ArtBook {
   year?: number
   publisher?: string
   tags: string[]
-  description?: string
+  notes?: { date: string; text: string }[]
   dateAdded: string
 }
 

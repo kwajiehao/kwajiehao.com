@@ -28,7 +28,7 @@ function sortBooks(items: Book[], field: string): Book[] {
 export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
   const [sortField, setSortField] = useState('dateAdded')
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
@@ -48,7 +48,7 @@ export function LibraryPage() {
         book.title.toLowerCase().includes(q) ||
         book.author.some((a) => a.toLowerCase().includes(q)) ||
         (book.publisher ?? '').toLowerCase().includes(q) ||
-        (book.description ?? '').toLowerCase().includes(q),
+        (book.notes ?? []).some((n) => n.text.toLowerCase().includes(q)),
       )
     }
 
@@ -92,17 +92,19 @@ export function LibraryPage() {
           {filteredBooks.length === 0 ? (
             <p class="text-[var(--color-muted)] col-span-full">No books match the selected filters.</p>
           ) : (
-            filteredBooks.map((book) => (
-              <BookCard key={book.slug} book={book} onTagClick={handleTagToggle} onClick={() => setSelectedBook(book)} />
+            filteredBooks.map((book, i) => (
+              <BookCard key={book.slug} book={book} onTagClick={handleTagToggle} onClick={() => setSelectedIndex(i)} />
             ))
           )}
         </div>
-        {selectedBook && (
+        {selectedIndex !== null && (
           <BookModal
-            book={selectedBook}
-            onClose={() => setSelectedBook(null)}
+            books={filteredBooks}
+            index={selectedIndex}
+            onClose={() => setSelectedIndex(null)}
+            onChange={setSelectedIndex}
             onTagClick={(tag) => {
-              setSelectedBook(null)
+              setSelectedIndex(null)
               handleTagToggle(tag)
             }}
           />

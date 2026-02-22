@@ -4,7 +4,9 @@
   year: 2013
   publisher: Zen Foto Gallery
   tags: [photography, japan]
-  description: Issei Suda is one of my favorite photographers. In this book, he captures scenes candid and surreal in late-1970s Shitamachi Tokyo, where he grew up. Kind of like an artsier version of Humans of New York, but back in the day.
+  notes:
+    - date: "2026-02-21"
+      text: Issei Suda is one of my favorite photographers. In this book, he captures scenes candid and surreal in late-1970s Shitamachi Tokyo, where he grew up. Kind of like an artsier version of Humans of New York, but back in the day.
   dateAdded: "2026-02-21"
   coverImage: https://d1jikcjf8oridj.cloudfront.net/i/72/3H5NLjA_2OacEF.jpg
 
@@ -14,7 +16,9 @@
   year: 2013
   publisher: Zen Foto Gallery
   tags: [photography, japan]
-  description: Osorezan is a mountain near the tip of Aomori which represents a gateway to the underworld. The photos here bear Issei Suda's trademark surrealism laced with palpable tension from the mystical mountain.
+  notes:
+    - date: "2026-02-21"
+      text: Osorezan is a mountain near the tip of Aomori which represents a gateway to the underworld. The photos here bear Issei Suda's trademark surrealism laced with palpable tension from the mystical mountain.
   dateAdded: "2026-02-21"
   coverImage: https://d1jikcjf8oridj.cloudfront.net/i/a6/PDyd5tn_2Tb7nx.jpg
 
@@ -24,7 +28,9 @@
   year: 2018
   publisher: IDW
   tags: [graphic-novel, china, politics]
-  description: A riveting account of what happened in Tiananmen from the POV of Lun Zhang, a sociology professor who helped organize student safety during the protests.
+  notes:
+    - date: "2026-02-21"
+      text: A riveting account of what happened in Tiananmen from the POV of Lun Zhang, a sociology professor who helped organize student safety during the protests.
   dateAdded: "2026-02-21"
   coverImage: https://m.media-amazon.com/images/I/71z21eDPUZL._AC_UF1000,1000_QL80_.jpg
 
@@ -34,6 +40,8 @@
   year: 2005
   publisher: Magnum
   tags: [photography]
-  description: Photographers are highly secretive about the actual photos they take, preferring only to show you the final product. As such, I see Magnum Contact Sheets as a treasure trove of lessons from some of the best photographers in history.
+  notes:
+    - date: "2026-02-21"
+      text: Photographers are highly secretive about the actual photos they take, preferring only to show you the final product. From that POV, Magnum Contact Sheets is a treasure trove of behind-the-scene lessons - what scenes they took more pictures of, how they selected photos for publication - from some of the best photographers in history.
   dateAdded: "2026-02-21"
   coverImage: https://m.media-amazon.com/images/I/815CI-Cn8LL.jpg

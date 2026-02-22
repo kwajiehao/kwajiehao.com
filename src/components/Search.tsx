@@ -60,7 +60,7 @@ export function Search() {
             return (
               book.title.toLowerCase().includes(q) ||
               book.author.join(' ').toLowerCase().includes(q) ||
-              (book.description ?? '').toLowerCase().includes(q) ||
+              (book.notes ?? []).some((n) => n.text.toLowerCase().includes(q)) ||
               book.tags.some((tag) => tag.toLowerCase().includes(q))
             )
           })

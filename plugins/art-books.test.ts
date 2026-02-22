@@ -23,7 +23,7 @@ describe('validateBookEntry', () => {
       coverImage: '/images/books/tokyo-nobody.jpg',
       year: 2000,
       publisher: 'Steidl',
-      description: 'A beautiful book about empty Tokyo.',
+      notes: [{ date: '2026-02-21', text: 'A beautiful book about empty Tokyo.' }],
     }
     expect(() => validateBookEntry(entry)).not.toThrow()
   })
@@ -102,13 +102,15 @@ describe('parseBooks', () => {
   coverImage: /images/books/test.jpg
   year: 2020
   publisher: Steidl
-  description: A great book
+  notes:
+    - date: "2026-01-01"
+      text: A great book
 `
     const books = parseBooks(yaml)
     expect(books[0].coverImage).toBe('/images/books/test.jpg')
     expect(books[0].year).toBe(2020)
     expect(books[0].publisher).toBe('Steidl')
-    expect(books[0].description).toBe('A great book')
+    expect(books[0].notes).toEqual([{ date: '2026-01-01', text: 'A great book' }])
   })
 
   it('throws on invalid entry', () => {

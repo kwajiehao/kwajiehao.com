@@ -14,6 +14,11 @@ export interface Post {
 
 export type TagMap = Record<string, Post[]>
 
+export interface BookNote {
+  date: string
+  text: string
+}
+
 export interface Book {
   slug: string
   title: string
@@ -22,7 +27,7 @@ export interface Book {
   year?: number
   publisher?: string
   tags: string[]
-  description?: string
+  notes?: BookNote[]
   dateAdded: string
 }
 
