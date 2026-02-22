@@ -35,6 +35,9 @@ src/
 ├── index.css             # Global styles + theme CSS variables
 ├── types.ts              # Shared types (Post, TagMap, Book, BookTagMap, PhotoCollection, SiteConfig)
 ├── vite-env.d.ts         # Virtual module type declarations
+├── utils/
+│   ├── image.ts          # Responsive image srcset generation for R2-hosted images
+│   └── image.test.ts     # Tests for image utility
 ├── components/
 │   ├── Layout.tsx        # Site shell: header, nav, footer, theme toggle (supports narrow/wide/full maxWidth)
 │   ├── ThemeToggle.tsx   # Dark/light mode switcher
@@ -54,6 +57,8 @@ src/
     ├── LibraryPage.tsx       # Art book catalog with filtering and sorting
     ├── PhotosPage.tsx        # Photo collections listing
     └── PhotoCollectionPage.tsx # Individual collection with gallery
+scripts/
+└── resize-images.ts          # CLI script to generate WebP variants and upload to R2
 plugins/
 ├── blog-posts.ts             # Vite plugin: virtual:blog-posts & virtual:blog-tags
 ├── blog-posts.test.ts
@@ -107,12 +112,33 @@ YAML is parsed with `js-yaml`. The dev server watches `content/books.yaml` for h
 
 Photo collections are markdown files in `content/collections/` with required frontmatter: `title`, `slug`, `date`, `cover`, `images` (array of image paths). Optional: `layout` (`"grid"` or `"single"`, default `"grid"`), `hidden` (default `false`). The markdown body is rendered as an optional description.
 
-Images are stored in `public/photos/<collection-slug>/`.
+Images are hosted on Cloudflare R2 via `photos.kwajiehao.com`.
 
 A custom Vite plugin (`plugins/photo-collections.ts`) exposes:
 - `virtual:photo-collections` — array of all collections sorted by date descending
 
 The dev server watches `content/collections/` for hot reload.
+
+### Image optimization
+
+Images are served with pre-generated WebP variants at 400/800/1200/1600px widths. Browsers select the appropriate variant via `srcset` and `sizes` attributes.
+
+**Variant naming convention:** `{filename}-{width}.webp` (e.g., `paris-gallery.jpeg` → `paris-gallery-400.webp`, `paris-gallery-800.webp`, etc.)
+
+**Resize workflow:**
+1. Place original images in a local directory
+2. Run `npm run resize -- ./local-photos/<slug> <slug>`
+3. The script generates WebP variants using `sharp` and uploads originals + variants to R2 via `wrangler`
+
+**Frontend usage:** `getResponsiveImageAttrs()` in `src/utils/image.ts` generates `srcSet` from any `photos.kwajiehao.com` URL. Non-R2 URLs pass through unchanged. Components apply `sizes` values matching their CSS layout:
+
+| Component | `sizes` | Rationale |
+|-----------|---------|-----------|
+| GridLayout | `(max-width: 768px) 50vw, 33vw` | 2 cols mobile, 3 cols desktop |
+| SingleLayout | `80vw` | Horizontal scroll, images fill most of width |
+| TheaterView | `90vw` | Matches `max-w-[90vw]` CSS |
+| Collection covers | `(max-width: 640px) 100vw, 50vw` | 1 col mobile, 2 cols desktop |
+| Hero image | `100vw` | Full-width hero |
 
 ### Site config
 

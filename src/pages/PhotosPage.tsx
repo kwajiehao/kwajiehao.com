@@ -2,6 +2,7 @@
 // ABOUTME: Shows all non-hidden collections as a two-column image grid.
 
 import { Layout } from '../components/Layout.tsx'
+import { getResponsiveImageAttrs } from '../utils/image'
 import collections from 'virtual:photo-collections'
 
 export function PhotosPage() {
@@ -24,6 +25,8 @@ export function PhotosPage() {
                 <div class="overflow-hidden">
                   <img
                     src={collection.cover}
+                    {...{ srcSet: getResponsiveImageAttrs(collection.cover).srcSet }}
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     alt={collection.title}
                     loading="lazy"
                     class="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"

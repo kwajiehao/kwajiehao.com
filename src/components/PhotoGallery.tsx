@@ -2,6 +2,7 @@
 // ABOUTME: Both modes support a shared theater view (lightbox) for full-screen viewing.
 
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
+import { getResponsiveImageAttrs } from '../utils/image'
 
 interface PhotoGalleryProps {
   images: string[]
@@ -108,6 +109,8 @@ function TheaterView({ images, index, onClose, onChange }: {
 
       <img
         src={images[index]}
+        {...{ srcSet: getResponsiveImageAttrs(images[index]).srcSet }}
+        sizes="90vw"
         alt=""
         class="max-w-[90vw] max-h-[85vh] object-contain select-none"
         onClick={(e) => e.stopPropagation()}
@@ -145,6 +148,8 @@ function GridLayout({ images, onOpen }: { images: string[]; onOpen: (i: number) 
         >
           <img
             src={src}
+            {...{ srcSet: getResponsiveImageAttrs(src).srcSet }}
+            sizes="(max-width: 768px) 50vw, 33vw"
             alt=""
             loading={i < 6 ? 'eager' : 'lazy'}
             class="w-full h-full object-cover"
@@ -210,6 +215,8 @@ function SingleLayout({ images, onOpen }: { images: string[]; onOpen: (i: number
           <img
             key={i}
             src={src}
+            {...{ srcSet: getResponsiveImageAttrs(src).srcSet }}
+            sizes="80vw"
             alt=""
             loading={i < 4 ? 'eager' : 'lazy'}
             class="flex-shrink-0 w-auto max-w-none cursor-pointer"
