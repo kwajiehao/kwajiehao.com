@@ -1,5 +1,5 @@
 // ABOUTME: CLI script to generate WebP variants of images at multiple widths and upload to R2.
-// ABOUTME: Usage: npm run resize -- ./local-photos/collection-slug collection-slug
+// ABOUTME: Usage: npm run resize-and-upload -- ./local-photos/collection-slug collection-slug
 
 import sharp from 'sharp'
 import { execSync } from 'child_process'
@@ -12,8 +12,8 @@ const BUCKET = 'kwajiehao-blog'
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.tiff'])
 
 function usage(): never {
-  console.error('Usage: npm run resize -- <image-dir> <collection-slug>')
-  console.error('Example: npm run resize -- ./local-photos/life-in-color life-in-color')
+  console.error('Usage: npm run resize-and-upload -- <image-dir> <collection-slug>')
+  console.error('Example: npm run resize-and-upload -- ./local-photos/life-in-color life-in-color')
   process.exit(1)
 }
 

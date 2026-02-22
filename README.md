@@ -49,13 +49,13 @@ kwajiehao-blog/
 Place your original images in a local directory and run the resize script. This generates WebP variants at 400/800/1200/1600px widths, then uploads both the originals and variants to R2:
 
 ```sh
-npm run resize -- ./path/to/images <collection-slug>
+npm run resize-and-upload -- ./path/to/images <collection-slug>
 ```
 
 For example:
 
 ```sh
-npm run resize -- ./local-photos/japan-2024 japan-2024
+npm run resize-and-upload -- ./local-photos/japan-2024 japan-2024
 ```
 
 The script will:
@@ -118,7 +118,7 @@ heroImage: https://photos.kwajiehao.com/japan-2024/cover.jpg
 
 ```sh
 # Upload originals + generate/upload WebP variants (preferred method)
-npm run resize -- ./path/to/images <collection-slug>
+npm run resize-and-upload -- ./path/to/images <collection-slug>
 
 # Upload a single image manually
 npx wrangler r2 object put kwajiehao-blog/<collection-slug>/<filename> --file <local-path> --remote

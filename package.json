@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "resize": "tsx scripts/resize-images.ts"
+    "resize-and-upload": "tsx scripts/resize-and-upload.ts"
   },
   "dependencies": {
     "preact": "^10.26.9",

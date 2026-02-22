@@ -58,7 +58,7 @@ src/
     ├── PhotosPage.tsx        # Photo collections listing
     └── PhotoCollectionPage.tsx # Individual collection with gallery
 scripts/
-└── resize-images.ts          # CLI script to generate WebP variants and upload to R2
+└── resize-and-upload.ts          # CLI script to generate WebP variants and upload to R2
 plugins/
 ├── blog-posts.ts             # Vite plugin: virtual:blog-posts & virtual:blog-tags
 ├── blog-posts.test.ts
@@ -127,7 +127,7 @@ Images are served with pre-generated WebP variants at 400/800/1200/1600px widths
 
 **Resize workflow:**
 1. Place original images in a local directory
-2. Run `npm run resize -- ./local-photos/<slug> <slug>`
+2. Run `npm run resize-and-upload -- ./local-photos/<slug> <slug>`
 3. The script generates WebP variants using `sharp` and uploads originals + variants to R2 via `wrangler`
 
 **Frontend usage:** `getResponsiveImageAttrs()` in `src/utils/image.ts` generates `srcSet` from any `photos.kwajiehao.com` URL. Non-R2 URLs pass through unchanged. Components apply `sizes` values matching their CSS layout:
