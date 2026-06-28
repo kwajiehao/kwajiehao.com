@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Generator"
+  short_description: "Expands requests into self-verifying task specs."
+  default_prompt: "Read and follow agent-docs/skills/task-generation-agent/SKILL.md to turn the request into an agent-docs task file with acceptance criteria and verification steps."

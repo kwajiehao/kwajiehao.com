@@ -1,0 +1,4 @@
+interface:
+  display_name: "Execution Agent"
+  short_description: "Implements approved tasks with local standards."
+  default_prompt: "Read and follow agent-docs/skills/execution-agent/SKILL.md to implement the assigned task, run focused checks, and prepare handoff evidence."

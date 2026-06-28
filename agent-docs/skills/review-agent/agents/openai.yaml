@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Agent"
+  short_description: "Reviews implementation against task specs."
+  default_prompt: "Read and follow agent-docs/skills/review-agent/SKILL.md to review the task output, lead with findings, and decide whether execution or verification should run next."

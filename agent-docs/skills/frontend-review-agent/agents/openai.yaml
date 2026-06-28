@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Reviewer"
+  short_description: "Uses Playwright CLI for staff-level UI review."
+  default_prompt: "Read and follow agent-docs/skills/frontend-review-agent/SKILL.md to review UI changes with Playwright CLI across desktop and mobile user flows."
