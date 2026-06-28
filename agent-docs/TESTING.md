@@ -46,6 +46,17 @@ Start the local dev server:
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
+Codex agents should start this server with escalated sandbox permissions on the first attempt, because binding Vite to `127.0.0.1:5173` can fail in the default sandbox with `listen EPERM`.
+
+Use these `exec_command` parameters:
+
+```text
+cmd: npm run dev -- --host 127.0.0.1 --port 5173
+sandbox_permissions: require_escalated
+justification: Do you want to allow starting the local Vite dev server on 127.0.0.1:5173 for repo verification?
+prefix_rule: ["npm", "run", "dev"]
+```
+
 If port `5173` is busy, use the next free port and record it in the verification notes.
 
 ## Mandatory Local Server Check

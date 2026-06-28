@@ -1,13 +1,16 @@
 // ABOUTME: Art book library page with a filterable text-first list.
 // ABOUTME: Supports tag filtering (AND semantics) and multiple sort options.
 
-import { useState, useMemo } from 'preact/hooks'
+import { useEffect, useMemo, useState } from 'preact/hooks'
 import { Layout } from '../components/Layout.tsx'
 import { BookListItem } from '../components/BookListItem.tsx'
 import { BookFilterBar } from '../components/BookFilterBar.tsx'
+import { usePagedCoverPrefetch } from '../hooks/usePagedCoverPrefetch.ts'
 import type { Book } from '../types.ts'
 import books from 'virtual:art-books'
 import bookTags from 'virtual:art-book-tags'
+
+const BOOKS_PER_PAGE = 20
 
 function sortBooks(items: Book[], field: string): Book[] {
   const sorted = [...items]
@@ -29,6 +32,7 @@ export function LibraryPage() {
   const [sortField, setSortField] = useState('dateAdded')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
 
@@ -53,7 +57,30 @@ export function LibraryPage() {
 
     return sortBooks(result, sortField)
   }, [activeTags, sortField, searchQuery])
-  const expandedBook = filteredBooks.find((book) => book.slug === expandedSlug)
+  const pageCount = Math.max(1, Math.ceil(filteredBooks.length / BOOKS_PER_PAGE))
+  const currentPageBooks = useMemo(() => {
+    const pageStart = (currentPage - 1) * BOOKS_PER_PAGE
+    return filteredBooks.slice(pageStart, pageStart + BOOKS_PER_PAGE)
+  }, [currentPage, filteredBooks])
+  const currentPageCoverUrls = useMemo(
+    () => currentPageBooks.map((book) => book.coverImage),
+    [currentPageBooks],
+  )
+  const firstVisibleBook = filteredBooks.length === 0
+    ? 0
+    : (currentPage - 1) * BOOKS_PER_PAGE + 1
+  const lastVisibleBook = Math.min(currentPage * BOOKS_PER_PAGE, filteredBooks.length)
+  const expandedBook = currentPageBooks.find((book) => book.slug === expandedSlug)
+
+  usePagedCoverPrefetch(currentPageCoverUrls)
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, pageCount))
+  }, [pageCount])
+
+  const resetPagePosition = () => {
+    setCurrentPage(1)
+  }
 
   const handleTagToggle = (tag: string) => {
     setActiveTags((prev) => {
@@ -65,11 +92,27 @@ export function LibraryPage() {
       }
       return next
     })
+    resetPagePosition()
   }
 
   const handleClearFilters = () => {
     setActiveTags(new Set())
     setSearchQuery('')
+    resetPagePosition()
+  }
+
+  const handleSortChange = (field: string) => {
+    setSortField(field)
+    resetPagePosition()
+  }
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query)
+    resetPagePosition()
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(Math.min(Math.max(page, 1), pageCount))
   }
 
   return (
@@ -84,11 +127,11 @@ export function LibraryPage() {
               onTagToggle={handleTagToggle}
               onClearFilters={handleClearFilters}
               sortField={sortField}
-              onSortChange={setSortField}
+              onSortChange={handleSortChange}
               visibleCount={filteredBooks.length}
               totalCount={books.length}
               searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
+              onSearchChange={handleSearchChange}
             />
             <div class="mt-8">
               {filteredBooks.length === 0 ? (
@@ -96,19 +139,60 @@ export function LibraryPage() {
                   No books match the selected filters.
                 </p>
               ) : (
-                <ul class="border-t border-[var(--color-border)]">
-                  {filteredBooks.map((book) => (
-                    <BookListItem
-                      key={book.slug}
-                      book={book}
-                      isExpanded={expandedSlug === book.slug}
-                      onToggle={() =>
-                        setExpandedSlug((current) => current === book.slug ? null : book.slug)
-                      }
-                      onTagClick={handleTagToggle}
-                    />
-                  ))}
-                </ul>
+                <>
+                  <ul class="border-t border-[var(--color-border)]">
+                    {currentPageBooks.map((book) => (
+                      <BookListItem
+                        key={book.slug}
+                        book={book}
+                        isExpanded={expandedSlug === book.slug}
+                        onToggle={() =>
+                          setExpandedSlug((current) => current === book.slug ? null : book.slug)
+                        }
+                        onTagClick={handleTagToggle}
+                      />
+                    ))}
+                  </ul>
+                  {pageCount > 1 && (
+                    <nav
+                      aria-label="Library pages"
+                      class="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm text-[var(--color-muted)]"
+                    >
+                      <span>
+                        Showing {firstVisibleBook}-{lastVisibleBook} of {filteredBooks.length}
+                      </span>
+                      <div class="flex items-center gap-2">
+                        <button
+                          type="button"
+                          aria-label="Previous library page"
+                          title="Previous page"
+                          disabled={currentPage === 1}
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          class="inline-flex h-8 w-8 items-center justify-center border border-[var(--color-border)] text-[var(--color-text)] transition-colors hover:bg-[var(--color-code-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:pointer-events-none disabled:opacity-35"
+                        >
+                          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 3.5 5.5 7 9 10.5" />
+                          </svg>
+                        </button>
+                        <span aria-live="polite" class="min-w-20 text-center">
+                          Page {currentPage} of {pageCount}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label="Next library page"
+                          title="Next page"
+                          disabled={currentPage === pageCount}
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          class="inline-flex h-8 w-8 items-center justify-center border border-[var(--color-border)] text-[var(--color-text)] transition-colors hover:bg-[var(--color-code-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:pointer-events-none disabled:opacity-35"
+                        >
+                          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 3.5 8.5 7 5 10.5" />
+                          </svg>
+                        </button>
+                      </div>
+                    </nav>
+                  )}
+                </>
               )}
             </div>
           </div>
