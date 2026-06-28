@@ -28,6 +28,7 @@ export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
   const [sortField, setSortField] = useState('dateAdded')
   const [searchQuery, setSearchQuery] = useState('')
+  const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
 
@@ -52,6 +53,7 @@ export function LibraryPage() {
 
     return sortBooks(result, sortField)
   }, [activeTags, sortField, searchQuery])
+  const expandedBook = filteredBooks.find((book) => book.slug === expandedSlug)
 
   const handleTagToggle = (tag: string) => {
     setActiveTags((prev) => {
@@ -74,30 +76,54 @@ export function LibraryPage() {
     <Layout maxWidth="wide">
       <section class="py-12">
         <h1 class="text-3xl font-bold mb-8">Library</h1>
-        <BookFilterBar
-          allTags={allTags}
-          activeTags={activeTags}
-          onTagToggle={handleTagToggle}
-          onClearFilters={handleClearFilters}
-          sortField={sortField}
-          onSortChange={setSortField}
-          visibleCount={filteredBooks.length}
-          totalCount={books.length}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
-        <div class="mt-8">
-          {filteredBooks.length === 0 ? (
-            <p class="border-y border-[var(--color-border)] py-8 text-sm text-[var(--color-muted)]">
-              No books match the selected filters.
-            </p>
-          ) : (
-            <ul class="border-t border-[var(--color-border)]">
-              {filteredBooks.map((book) => (
-                <BookListItem key={book.slug} book={book} onTagClick={handleTagToggle} />
-              ))}
-            </ul>
-          )}
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,42rem)_minmax(14rem,1fr)] lg:gap-10">
+          <div class="min-w-0">
+            <BookFilterBar
+              allTags={allTags}
+              activeTags={activeTags}
+              onTagToggle={handleTagToggle}
+              onClearFilters={handleClearFilters}
+              sortField={sortField}
+              onSortChange={setSortField}
+              visibleCount={filteredBooks.length}
+              totalCount={books.length}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
+            <div class="mt-8">
+              {filteredBooks.length === 0 ? (
+                <p class="border-y border-[var(--color-border)] py-8 text-sm text-[var(--color-muted)]">
+                  No books match the selected filters.
+                </p>
+              ) : (
+                <ul class="border-t border-[var(--color-border)]">
+                  {filteredBooks.map((book) => (
+                    <BookListItem
+                      key={book.slug}
+                      book={book}
+                      isExpanded={expandedSlug === book.slug}
+                      onToggle={() =>
+                        setExpandedSlug((current) => current === book.slug ? null : book.slug)
+                      }
+                      onTagClick={handleTagToggle}
+                    />
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <aside class="hidden min-w-0 lg:block" aria-live="polite" aria-atomic="true">
+            <div class="sticky top-8 min-h-[28rem]">
+              {expandedBook?.coverImage && (
+                <img
+                  src={expandedBook.coverImage}
+                  alt={`${expandedBook.title} cover`}
+                  loading="lazy"
+                  class="max-h-[34rem] w-full object-contain object-top"
+                />
+              )}
+            </div>
+          </aside>
         </div>
       </section>
     </Layout>

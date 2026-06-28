@@ -10,6 +10,7 @@ const book: Book = {
   slug: 'tokyo-nobody',
   title: 'Tokyo Nobody',
   author: ['Masataka Nakano'],
+  coverImage: 'https://example.com/tokyo-nobody.jpg',
   publisher: 'Little More',
   year: 2000,
   tags: ['photography', 'japan'],
@@ -23,8 +24,16 @@ const book: Book = {
 }
 
 describe('BookListItem', () => {
-  it('groups title and author in the top line and removes expanded metadata block', () => {
-    const { container } = render(<BookListItem book={book} onTagClick={vi.fn()} />)
+  it('keeps expansion controlled while preserving compact row metadata', () => {
+    const onToggle = vi.fn()
+    const { container } = render(
+      <BookListItem
+        book={book}
+        isExpanded={false}
+        onToggle={onToggle}
+        onTagClick={vi.fn()}
+      />,
+    )
 
     const topLinePrimary = container.querySelector('[data-topline-primary]')
     expect(topLinePrimary).not.toBeNull()
@@ -37,7 +46,26 @@ describe('BookListItem', () => {
     expect(topLineMetadata?.textContent).toBe('Little More / 2000')
     expect(topLineMetadata?.getAttribute('class')).toContain('text-right')
 
-    fireEvent.click(screen.getByRole('button', { name: /Tokyo Nobody/ }))
+    const toggle = screen.getByRole('button', { name: /Tokyo Nobody/ })
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(screen.queryByText('Empty streets and patient framing.')).toBeNull()
+    expect(screen.queryByRole('img', { name: 'Tokyo Nobody cover' })).toBeNull()
+
+    fireEvent.click(toggle)
+
+    expect(onToggle).toHaveBeenCalledTimes(1)
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+  })
+
+  it('renders notes, tags, and the mobile cover image when expanded', () => {
+    const { container } = render(
+      <BookListItem
+        book={book}
+        isExpanded={true}
+        onToggle={vi.fn()}
+        onTagClick={vi.fn()}
+      />,
+    )
 
     const details = container.querySelector('#book-details-tokyo-nobody')
     expect(details).not.toBeNull()
@@ -53,6 +81,11 @@ describe('BookListItem', () => {
     expect(screen.queryByText('Tags')).toBeNull()
     expect(screen.queryByText(/Added/)).toBeNull()
     expect(screen.queryByText(/21 Feb 2026/)).toBeNull()
+
+    const cover = screen.getByRole('img', { name: 'Tokyo Nobody cover' })
+    expect(cover.getAttribute('src')).toBe('https://example.com/tokyo-nobody.jpg')
+    expect(cover.getAttribute('loading')).toBe('lazy')
+    expect(cover.closest('figure')?.getAttribute('class')).toContain('lg:hidden')
 
     const tags = screen.getByLabelText('Tags for Tokyo Nobody')
     expect(tags.getAttribute('class')).toContain('col-start-1')

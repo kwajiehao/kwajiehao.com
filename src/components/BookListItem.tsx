@@ -1,11 +1,12 @@
 // ABOUTME: Expandable text row for a book in the library list.
 // ABOUTME: Shows compact metadata first, then inline notes, tags, and details.
 
-import { useState } from 'preact/hooks'
 import type { Book } from '../types.ts'
 
 interface BookListItemProps {
   book: Book
+  isExpanded: boolean
+  onToggle: () => void
   onTagClick?: (tag: string) => void
 }
 
@@ -18,8 +19,7 @@ function compactMetadata(book: Book): string {
 
 const entryGridColumns = 'grid-cols-[minmax(0,1fr)_1.25rem] sm:grid-cols-[minmax(0,1.35fr)_minmax(10rem,0.75fr)_minmax(9rem,0.65fr)_1.25rem]'
 
-export function BookListItem({ book, onTagClick }: BookListItemProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+export function BookListItem({ book, isExpanded, onToggle, onTagClick }: BookListItemProps) {
   const sortedNotes = book.notes
     ? [...book.notes].sort((a, b) => b.date.localeCompare(a.date))
     : []
@@ -32,7 +32,7 @@ export function BookListItem({ book, onTagClick }: BookListItemProps) {
           type="button"
           aria-expanded={isExpanded}
           aria-controls={detailsId}
-          onClick={() => setIsExpanded((current) => !current)}
+          onClick={onToggle}
           class={`grid w-full cursor-pointer ${entryGridColumns} gap-x-3 gap-y-1 py-4 text-left outline-none transition-colors hover:bg-[var(--color-code-bg)] focus-visible:bg-[var(--color-code-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-accent)] sm:gap-4 sm:px-2`}
         >
           <span
@@ -61,6 +61,17 @@ export function BookListItem({ book, onTagClick }: BookListItemProps) {
 
         {isExpanded && (
           <div id={detailsId} class={`grid ${entryGridColumns} gap-x-3 gap-y-4 pb-5 sm:gap-x-4 sm:px-2 sm:pr-10`}>
+            {book.coverImage && (
+              <figure class="col-span-2 col-start-1 lg:hidden sm:col-span-3">
+                <img
+                  src={book.coverImage}
+                  alt={`${book.title} cover`}
+                  loading="lazy"
+                  class="max-h-72 w-full max-w-48 object-contain object-left-top"
+                />
+              </figure>
+            )}
+
             <div class="col-start-1 min-w-0 space-y-4 sm:col-span-3">
               {sortedNotes.length > 0 ? (
                 sortedNotes.map((note) => (

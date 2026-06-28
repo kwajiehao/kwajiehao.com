@@ -20,7 +20,7 @@
     - date: "2026-02-21"
       text: Osorezan is a mountain near the tip of Aomori which represents a gateway to the underworld. The photos here bear Issei Suda's trademark surrealism laced with palpable tension from the mystical mountain.
   dateAdded: "2026-02-21"
-  coverImage: https://d1jikcjf8oridj.cloudfront.net/i/a6/PDyd5tn_2Tb7nx.jpg
+  coverImage: https://d1m232vsyej29j.cloudfront.net/i/a6/WPoifXz2_2Tb7nx.jpg
 
 - slug: tiananmen-1989
   title: Tiananmen 1989 - Our Shattered Hopes
@@ -36,7 +36,7 @@
 
 - slug: magnum-contact-sheets
   title: Magnum Contact Sheets
-  author: Kristen Lubben
+  author: [Kristen Lubben]
   year: 2005
   publisher: Magnum
   tags: [photography]
@@ -45,3 +45,52 @@
       text: Photographers are highly secretive about the actual photos they take, preferring only to show you the final product. From that POV, Magnum Contact Sheets is a treasure trove of behind-the-scene lessons - what scenes they took more pictures of, how they selected photos for publication - from some of the best photographers in history.
   dateAdded: "2026-02-21"
   coverImage: https://m.media-amazon.com/images/I/815CI-Cn8LL.jpg
+
+- slug: reframing-motherhood
+  title: Reframing Motherhood
+  author: [Annie Hsiao-Ching Wang]
+  year: 2020
+  publisher: BO Books
+  tags: [photography]
+  notes:
+    - date: "2026-06-28"
+      text: Beyond the (obviously) incredibly cool concept of taking an annual, recursive self-portrait with her son with the previous year's photo in the background, this book has one of my favorite book binding formats - the entire book is one large folded sheet.
+  dateAdded: "2026-06-28"
+  coverImage: https://d2w8mc4ffkqyzk.cloudfront.net/i/a1/2JqutJkBI_X2wr1d.jpeg
+
+
+- slug: hundred
+  title: "Hundred: What You Learn in a Lifetime"
+  author: [Heike Faller, Valerio Vidali]
+  year: 2019
+  publisher: Particular Books
+  tags: [picture-book]
+  notes:
+    - date: "2026-06-28"
+      text: We stumbled upon this book in our hotel in the middle of the Lake Towada National Park. It was so beautifully illustrated and told such a moving story that we were moved to tears.
+  dateAdded: "2026-06-28"
+  coverImage: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn-7PkVF063j64wSwdawZ-2Eqd31QCVqJOrGF4HmpsUZ_c3Kw9pNyRmfdm&s=10
+
+- slug: between-the-sexes
+  title: Between the Sexes
+  author: [Elliott Erwitt]
+  year: 1994
+  publisher: W.M. Norton & Company
+  tags: [photography, classics]
+  notes:
+    - date: "2026-06-28"
+      text: It took me some time to track this book down on eBay. It is a special book, in that the original series was commissioned by a Japanese magazine, with the prompt to come up with "photos of couples" and no fixed due date. Elliott Erwitt delivered in style.
+  dateAdded: "2026-06-28"
+  coverImage: https://assets.bigcartel.com/product_images/87a76279-6260-4d5c-8a28-26e7075e7ff3/elliot-erwitt-between-the-sexes-signed.jpg?auto=format&fit=max&h=1200&w=1200
+
+- slug: emergent-tokyo
+  title: "Emergent Tokyo: Desigining the Spontaneous City"
+  author: [Jorge Almazan]
+  year: 2024
+  publisher: Oro
+  tags: [urban-studies]
+  notes:
+    - date: "2026-06-28"
+      text: Fascinating book on the various factors and accidental policies that make Tokyo such a vibrant city. The data analysis and visualizations were extremely cool.
+  dateAdded: "2026-06-28"
+  coverImage: https://m.media-amazon.com/images/I/717ZKzPnWpL._AC_UF1000,1000_QL80_.jpg
