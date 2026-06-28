@@ -25,10 +25,11 @@ Create an executable task spec from a user request. Optimize for clarity, bounde
 3. Check memory for relevant lessons or tooling notes.
 4. Create a task file under `agent-docs/tasks/YYYY-MM-DD-short-slug.md`.
 5. Fill every section of `agent-docs/TASK_TEMPLATE.md`; use `N/A` only when a section genuinely does not apply.
-6. Write acceptance criteria as self-verifying checks. Each criterion must name an action and expected evidence.
-7. Include a mandatory local dev server criterion.
-8. Assign agent roles. UI changes require frontend review and verification.
-9. Mark the task `Ready` only when execution can start without asking the user for obvious missing context.
+6. Add a red-green TDD plan. Require a focused failing check before implementation, or document why TDD is not practical.
+7. Write acceptance criteria as self-verifying checks. Each criterion must name an action and expected evidence.
+8. Include a mandatory local dev server criterion.
+9. Assign agent roles. UI changes require frontend review and verification.
+10. Mark the task `Ready` only when execution can start without asking the user for obvious missing context.
 
 ## Acceptance Criteria Rules
 
@@ -36,6 +37,7 @@ Create an executable task spec from a user request. Optimize for clarity, bounde
 - Avoid vague criteria such as "looks good" without a concrete review checklist.
 - Include empty, error, mobile, keyboard, and theme criteria when the task touches UI behavior.
 - Include performance or data-size criteria when the task changes lists, filters, or media-heavy pages.
+- Include red-green evidence as an acceptance gate for behavior changes.
 - Include non-goals to prevent scope drift.
 
 ## Output

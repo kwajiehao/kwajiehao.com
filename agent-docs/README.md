@@ -8,7 +8,7 @@ This directory defines the development loop for this site. The goal is fast iter
 2. Main agent invokes the task generation agent with `agent-docs/skills/task-generation-agent/SKILL.md`.
 3. Task generation agent creates or updates a task file under `agent-docs/tasks/` using `agent-docs/TASK_TEMPLATE.md`.
 4. Main agent invokes the execution agent with `agent-docs/skills/execution-agent/SKILL.md`.
-5. Execution agent implements the task, follows `agent-docs/CODING_STANDARDS.md`, and records focused test evidence.
+5. Execution agent practices red-green TDD, implements the task, follows `agent-docs/CODING_STANDARDS.md`, and records focused test evidence.
 6. Main agent invokes the review agent with `agent-docs/skills/review-agent/SKILL.md`.
 7. Review agent decides whether specialist verification is needed. UI work always requires `agent-docs/skills/frontend-review-agent/SKILL.md`.
 8. Verification agent runs the final checks with `agent-docs/skills/verification-agent/SKILL.md`. The loop always includes a local dev server smoke test.
@@ -26,6 +26,17 @@ Review agent: acts as an independent staff engineer. It reviews the diff, task f
 Verification agent: executes tests and browser checks. It records commands, routes, observations, and artifacts. It does not fix code.
 
 Frontend review agent: specialist frontend reviewer using Playwright CLI. It checks task correctness, accessibility, responsive behavior, interaction quality, visual polish, and console errors.
+
+## Subagent Control Rules
+
+Subagents accelerate work only when their output is bounded and independently useful. The main agent owns orchestration, integration, and final evidence.
+
+- Use `fork_context: false` when the goal is to clear context or get an independent pass.
+- Give each subagent a concrete role, file scope, and stop condition.
+- Ask execution agents to report changed files and checks immediately after their bounded task.
+- Do not wait indefinitely. If a subagent stalls on a long-running server or browser session, interrupt it, ask for concise status, and continue from the current workspace state.
+- Record verification evidence in the task file, not only in chat or subagent messages.
+- Close completed or stuck subagents after their output is no longer needed.
 
 ## Review And Verification Split
 
@@ -60,6 +71,7 @@ Read and follow agent-docs/skills/frontend-review-agent/SKILL.md. Use playwright
 A task is not done until:
 
 - Acceptance criteria in the task file have concrete evidence.
+- Red-green TDD evidence is recorded, or a specific exception is documented.
 - `npm run test` and `npm run build` have been run or a documented reason explains why they were not applicable.
 - The local dev server has been started and verified.
 - UI work has Playwright CLI evidence on at least desktop and mobile viewports.

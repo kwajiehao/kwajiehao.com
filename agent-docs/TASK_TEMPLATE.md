@@ -39,6 +39,13 @@ Status: Draft | Ready | In Progress | In Review | Needs Changes | Verified | Clo
 - Accessibility and responsive concerns:
 - Risks:
 
+## Red-Green TDD Plan
+
+- Red check:
+- Expected initial failure:
+- Green check:
+- Exception reason if TDD is not practical:
+
 ## Self-Verifying Acceptance Criteria
 
 Every criterion must include how to prove it. Include at least one local-server criterion for every task.
@@ -59,6 +66,7 @@ Every criterion must include how to prove it. Include at least one local-server 
 ## Handoff Evidence
 
 - Commands run:
+- Red-green evidence:
 - Browser routes checked:
 - Artifacts:
 - Known limitations:

@@ -2,6 +2,24 @@
 
 Use this file for every task in the agent loop. Prefer tighter checks during execution, then full verification before handoff.
 
+## Red-Green TDD Loop
+
+Use red-green TDD for every behavior change.
+
+1. Red: write or identify the smallest check that should fail before the change.
+2. Run that focused check and record the failure.
+3. Green: implement the smallest coherent change.
+4. Rerun the focused check and record the pass.
+5. Broaden to `npm run test`, `npm run build`, local server, and Playwright as required.
+
+Acceptable red checks include:
+
+- A Vitest unit test for parsing, filtering, sorting, data transforms, or helpers.
+- A component or integration test when one is practical in the current stack.
+- A documented Playwright/manual browser expectation for UI-only work where adding an automated test would be disproportionate.
+
+If no red check is practical, record the reason before implementation and make the review agent evaluate that exception.
+
 ## Standard Commands
 
 Install dependencies only when missing or stale:
@@ -77,6 +95,7 @@ Record verification in the task or handoff:
 
 ```md
 Verification:
+- Red-green: `<focused check>` failed before implementation, then passed after implementation
 - `npm run test`: pass
 - `npm run build`: pass
 - Local server: `npm run dev -- --host 127.0.0.1 --port 5173`

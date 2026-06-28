@@ -36,6 +36,10 @@ These standards are based on John Ousterhout's design principles: reduce complex
 
 ## Testing Standards
 
+- Practice red-green TDD for behavior changes. Define the smallest meaningful failing check first, run it red, implement the change, then rerun it green.
+- Prefer automated red checks: unit tests, parser/plugin tests, component tests, or focused integration tests.
+- For UI changes where no practical automated pre-check exists, define the expected browser failure before coding, then prove the green state with Playwright CLI after implementation.
+- Do not skip red-green evidence silently. If TDD is not applicable, explain why in the task handoff.
 - Add or update tests when behavior changes in parsing, filtering, sorting, rendering logic, or reusable helpers.
 - For UI-only changes, use browser verification in addition to build and unit tests.
 - Every task handoff must name the commands run and the result.

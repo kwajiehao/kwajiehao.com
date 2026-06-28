@@ -34,7 +34,7 @@ Robustness: empty states, long text, missing optional data, many items, and brow
 ## Playwright CLI Procedure
 
 1. Ensure the local dev server is running. If not, ask the verification agent or start it as part of review.
-2. Open the changed route with `playwright-cli open <url>`.
+2. Open the changed route with a named persistent session, for example `playwright-cli -s=frontend-review open <url> --persistent`.
 3. Take a snapshot and inspect landmarks, buttons, links, text, and current route.
 4. Exercise the primary flow using refs from the snapshot.
 5. Resize to at least `390 844` and `1440 900`; include tablet if the layout has a breakpoint risk.

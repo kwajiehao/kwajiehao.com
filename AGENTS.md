@@ -9,3 +9,5 @@ Read and follow agent-docs/skills/execution-agent/SKILL.md before working.
 ```
 
 Frontend changes require the frontend review agent and Playwright CLI verification. Every verification loop must include starting the local dev server and checking the changed route in a browser or HTTP smoke test.
+
+For agentic development, red-green TDD is a key instruction. Before implementation, define the smallest meaningful failing check, run it red, implement, then rerun it green. If no pre-implementation automated check is practical, document the reason and define a browser/manual red check before coding.

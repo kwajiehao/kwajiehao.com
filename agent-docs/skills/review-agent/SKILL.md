@@ -22,9 +22,10 @@ Review the implementation, not the intention. Findings should be specific, repro
 1. Compare the implementation to each acceptance criterion.
 2. Inspect likely runtime paths, edge cases, and state transitions.
 3. Check whether the solution adds avoidable complexity or violates local patterns.
-4. Check tests and verification evidence for the changed surface.
-5. For UI work, require frontend review with Playwright CLI before final approval.
-6. Decide `Pass`, `Needs Changes`, or `Blocked`.
+4. Check red-green TDD evidence. Missing evidence is blocking unless a specific exception is justified.
+5. Check tests and verification evidence for the changed surface.
+6. For UI work, require frontend review with Playwright CLI before final approval.
+7. Decide `Pass`, `Needs Changes`, or `Blocked`.
 
 ## Severity
 

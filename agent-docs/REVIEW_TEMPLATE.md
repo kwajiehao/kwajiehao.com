@@ -21,6 +21,7 @@ Decision: Pass | Needs Changes | Blocked
 
 ## Verification
 
+- Red-green evidence:
 - Tests reviewed:
 - Local server evidence:
 - Playwright evidence:
