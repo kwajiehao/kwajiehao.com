@@ -5,7 +5,7 @@ interface BookFilterBarProps {
   allTags: string[]
   activeTags: Set<string>
   onTagToggle: (tag: string) => void
-  onClearTags: () => void
+  onClearFilters: () => void
   sortField: string
   onSortChange: (field: string) => void
   visibleCount: number
@@ -25,7 +25,7 @@ export function BookFilterBar({
   allTags,
   activeTags,
   onTagToggle,
-  onClearTags,
+  onClearFilters,
   sortField,
   onSortChange,
   visibleCount,
@@ -36,15 +36,17 @@ export function BookFilterBar({
   const isFiltered = activeTags.size > 0 || searchQuery.trim().length > 0
 
   return (
-    <div class="space-y-4">
+    <section class="space-y-4" aria-label="Library filters">
+      <label for="library-search" class="sr-only">Search library</label>
       <input
+        id="library-search"
         type="text"
-        placeholder="Search by title, author..."
+        placeholder="Search by title, author, publisher, or note..."
         value={searchQuery}
         onInput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
         class="w-full px-3 py-2 text-sm bg-transparent border border-[var(--color-border)] rounded text-[var(--color-text)] outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] transition-colors"
       />
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2" aria-label="Filter by tag">
         {allTags.map((tag) => {
           const isActive = activeTags.has(tag)
           return (
@@ -52,6 +54,7 @@ export function BookFilterBar({
               key={tag}
               type="button"
               onClick={() => onTagToggle(tag)}
+              aria-pressed={isActive}
               class={`text-xs px-2.5 py-1 rounded-full transition-colors cursor-pointer ${
                 isActive
                   ? 'bg-[var(--color-accent)] text-white'
@@ -63,29 +66,29 @@ export function BookFilterBar({
           )
         })}
       </div>
-      <div class="flex items-center justify-between text-xs text-[var(--color-muted)]">
+      <div class="flex flex-col gap-3 text-xs text-[var(--color-muted)] sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
+          <span>
+            {visibleCount} of {totalCount} books
+          </span>
           {isFiltered && (
-            <>
-              <span>
-                {visibleCount} of {totalCount}
-              </span>
-              <button
-                type="button"
-                onClick={onClearTags}
-                class="text-[var(--color-accent)] hover:underline cursor-pointer"
-              >
-                Clear
-              </button>
-            </>
+            <button
+              type="button"
+              onClick={onClearFilters}
+              class="text-[var(--color-accent)] hover:underline cursor-pointer"
+            >
+              Clear filters
+            </button>
           )}
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2" aria-label="Sort books">
+          <span>Sort</span>
           {sortOptions.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => onSortChange(opt.value)}
+              aria-pressed={sortField === opt.value}
               class={`transition-colors cursor-pointer ${
                 sortField === opt.value
                   ? 'text-[var(--color-accent)]'
@@ -97,6 +100,6 @@ export function BookFilterBar({
           ))}
         </div>
       </div>
-    </div>
+    </section>
   )
 }

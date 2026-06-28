@@ -1,11 +1,10 @@
-// ABOUTME: Art book library page with filterable card grid.
+// ABOUTME: Art book library page with a filterable text-first list.
 // ABOUTME: Supports tag filtering (AND semantics) and multiple sort options.
 
 import { useState, useMemo } from 'preact/hooks'
 import { Layout } from '../components/Layout.tsx'
-import { BookCard } from '../components/BookCard.tsx'
+import { BookListItem } from '../components/BookListItem.tsx'
 import { BookFilterBar } from '../components/BookFilterBar.tsx'
-import { BookModal } from '../components/BookModal.tsx'
 import type { Book } from '../types.ts'
 import books from 'virtual:art-books'
 import bookTags from 'virtual:art-book-tags'
@@ -28,7 +27,6 @@ function sortBooks(items: Book[], field: string): Book[] {
 export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
   const [sortField, setSortField] = useState('dateAdded')
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
@@ -80,7 +78,7 @@ export function LibraryPage() {
           allTags={allTags}
           activeTags={activeTags}
           onTagToggle={handleTagToggle}
-          onClearTags={handleClearFilters}
+          onClearFilters={handleClearFilters}
           sortField={sortField}
           onSortChange={setSortField}
           visibleCount={filteredBooks.length}
@@ -88,27 +86,19 @@ export function LibraryPage() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8">
+        <div class="mt-8">
           {filteredBooks.length === 0 ? (
-            <p class="text-[var(--color-muted)] col-span-full">No books match the selected filters.</p>
+            <p class="border-y border-[var(--color-border)] py-8 text-sm text-[var(--color-muted)]">
+              No books match the selected filters.
+            </p>
           ) : (
-            filteredBooks.map((book, i) => (
-              <BookCard key={book.slug} book={book} onTagClick={handleTagToggle} onClick={() => setSelectedIndex(i)} />
-            ))
+            <ul class="border-t border-[var(--color-border)]">
+              {filteredBooks.map((book) => (
+                <BookListItem key={book.slug} book={book} onTagClick={handleTagToggle} />
+              ))}
+            </ul>
           )}
         </div>
-        {selectedIndex !== null && (
-          <BookModal
-            books={filteredBooks}
-            index={selectedIndex}
-            onClose={() => setSelectedIndex(null)}
-            onChange={setSelectedIndex}
-            onTagClick={(tag) => {
-              setSelectedIndex(null)
-              handleTagToggle(tag)
-            }}
-          />
-        )}
       </section>
     </Layout>
   )

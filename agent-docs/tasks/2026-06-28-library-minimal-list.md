@@ -2,7 +2,7 @@
 
 Date: 2026-06-28
 Owner: main agent
-Status: Ready
+Status: Verified
 
 ## User Request
 
@@ -68,14 +68,14 @@ The `/library` page becomes a scannable text-first list. Users can keep using se
 
 | ID | Criterion | Validation action | Expected evidence | Status |
 |---|---|---|---|---|
-| AC1 | `/library` renders books as a minimalist text list instead of the current image card grid. | Inspect `LibraryPage.tsx` and open `/library` in browser. | Book entries appear as compact rows with no card grid or modal-first interaction. | Pending |
-| AC2 | Each collapsed row shows key information: title, author or authors, and available year/publisher metadata. | Use Playwright snapshot on `/library` desktop and mobile. | Snapshot text includes title, author, and metadata in row summaries; missing optional data does not show broken separators. | Pending |
-| AC3 | Tapping or activating a row expands inline details with blurb and additional metadata. | Use Playwright CLI to click or press Enter/Space on a row. | Row expands in place, shows note text and metadata, and can collapse again. | Pending |
-| AC4 | Search, tag filters, clear filters, result count, and sort controls still work. | Exercise search, a tag toggle, clear, and each sort option in browser. | Visible rows update correctly and no console errors appear. | Pending |
-| AC5 | Keyboard and accessibility behavior is valid for the row toggles. | Tab to a row, toggle with keyboard, inspect semantic control in snapshot or DOM. | Focus is visible; Enter/Space toggles; expanded state is conveyed by native details or ARIA. | Pending |
-| AC6 | Mobile layout remains readable and touch-friendly. | Resize Playwright to `390 844`, inspect and interact with rows. | No text overlap, no clipped controls, and expanded details remain readable. | Pending |
-| AC7 | Local dev server runs and `/library` responds. | Start `npm run dev -- --host 127.0.0.1 --port 5173`; check `/library`. | HTTP 200 or browser-rendered route with no blocking errors. | Pending |
-| AC8 | Project checks pass. | Run `npm run test` and `npm run build`. | Both commands pass, or failures are documented as unrelated environmental blockers. | Pending |
+| AC1 | `/library` renders books as a minimalist text list instead of the current image card grid. | Inspect `LibraryPage.tsx` and open `/library` in browser. | `LibraryPage.tsx` renders a `<ul>` of `BookListItem`; Playwright desktop snapshot `page-2026-06-28T08-43-42-670Z.yml` shows compact row buttons and no card grid/modal. | Pass |
+| AC2 | Each collapsed row shows key information: title, author or authors, and available year/publisher metadata. | Use Playwright snapshot on `/library` desktop and mobile. | Desktop snapshot `page-2026-06-28T08-43-42-670Z.yml` and mobile snapshot `page-2026-06-28T08-46-56-669Z.yml` show title, author, and publisher/year per row. | Pass |
+| AC3 | Tapping or activating a row expands inline details with blurb and additional metadata. | Use Playwright CLI to click or press Enter/Space on a row. | Click snapshot `page-2026-06-28T08-44-06-667Z.yml` shows inline note, date, publisher/year/added metadata, and tags; Enter collapsed it in `page-2026-06-28T08-44-18-492Z.yml`. | Pass |
+| AC4 | Search, tag filters, clear filters, result count, and sort controls still work. | Exercise search, a tag toggle, clear, and each sort option in browser. | Playwright verified title search, note search, `japan` tag filter, Clear filters, all sort buttons, empty state, and no console errors. | Pass |
+| AC5 | Keyboard and accessibility behavior is valid for the row toggles. | Tab to a row, toggle with keyboard, inspect semantic control in snapshot or DOM. | `BookListItem` uses a native button with `aria-expanded`, `aria-controls`, and focus-visible styling; Playwright Enter toggled collapse. | Pass |
+| AC6 | Mobile layout remains readable and touch-friendly. | Resize Playwright to `390 844`, inspect and interact with rows. | Mobile snapshots `page-2026-06-28T08-46-56-669Z.yml` and `page-2026-06-28T08-47-11-074Z.yml` show readable rows and expanded details. | Pass |
+| AC7 | Local dev server runs and `/library` responds. | Start `npm run dev -- --host 127.0.0.1 --port 5173`; check `/library`. | Vite served `http://127.0.0.1:5173/`; `curl -I /` and `curl -I /library` returned HTTP 200. | Pass |
+| AC8 | Project checks pass. | Run `npm run test` and `npm run build`. | `npm run test` passed 53 tests; `npm run build` passed and prerendered `/library`. | Pass |
 
 ## Test Plan
 
@@ -104,18 +104,39 @@ The `/library` page becomes a scannable text-first list. Users can keep using se
 ## Handoff Evidence
 
 - Commands run:
+  - `npm run test`: pass, 53 tests.
+  - `npm run build`: pass.
+  - `npm run dev -- --host 127.0.0.1 --port 5173`: server started.
+  - `curl -I http://127.0.0.1:5173/`: HTTP 200.
+  - `curl -I http://127.0.0.1:5173/library`: HTTP 200.
+  - `playwright-cli -s=library-review open http://127.0.0.1:5173/library --persistent`: pass.
+  - Playwright interactions: expand row, keyboard collapse, title search, note search, tag filter, clear filters, Recent/Title/Author/Year sort controls, empty state, mobile resize and expansion, console checks.
 - Browser routes checked:
+  - `/`
+  - `/library`
 - Artifacts:
+  - `.playwright-cli/page-2026-06-28T08-43-42-670Z.yml`: desktop collapsed list.
+  - `.playwright-cli/page-2026-06-28T08-44-06-667Z.yml`: desktop expanded row.
+  - `.playwright-cli/page-2026-06-28T08-44-18-492Z.yml`: keyboard-collapsed row.
+  - `.playwright-cli/page-2026-06-28T08-45-12-785Z.yml`: `japan` tag filter.
+  - `.playwright-cli/page-2026-06-28T08-45-55-941Z.yml`: Title sort.
+  - `.playwright-cli/page-2026-06-28T08-46-56-669Z.yml`: mobile collapsed list.
+  - `.playwright-cli/page-2026-06-28T08-47-11-074Z.yml`: mobile expanded row.
 - Known limitations:
+  - No automated browser test was added; verification was performed with Playwright CLI snapshots and interactions.
 
 ## Review Notes
 
 - Blocking findings:
+  - Initial code review blocked on missing recorded verification evidence. Evidence has now been recorded above.
 - Non-blocking findings:
+  - Frontend reviewer found no blocking product-code issue. Its own Playwright session was unstable, but the verification agent and main-thread Playwright pass completed the missing browser interactions.
 - Reviewer decision:
+  - Verified. Code review found no implementation defect, frontend review found no product-code blocker, and verification agent confirmed tests, build, local server, desktop/mobile Playwright flows, and clean console.
 
 ## Memory Candidates
 
 - Lessons:
+  - Use a named persistent Playwright CLI session for multi-step browser verification when the default session exits between commands.
 - Skill candidates:
 - Tool or plugin ideas:
