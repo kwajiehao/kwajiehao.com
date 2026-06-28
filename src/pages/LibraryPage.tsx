@@ -1,31 +1,16 @@
 // ABOUTME: Art book library page with a filterable text-first list.
-// ABOUTME: Supports tag filtering (AND semantics) and multiple sort options.
+// ABOUTME: Supports tag filtering and multiple sort options.
 
 import { useEffect, useMemo, useState } from 'preact/hooks'
 import { Layout } from '../components/Layout.tsx'
 import { BookListItem } from '../components/BookListItem.tsx'
 import { BookFilterBar } from '../components/BookFilterBar.tsx'
 import { usePagedCoverPrefetch } from '../hooks/usePagedCoverPrefetch.ts'
-import type { Book } from '../types.ts'
+import { filterAndSortLibraryBooks } from '../utils/libraryBooks.ts'
 import books from 'virtual:art-books'
 import bookTags from 'virtual:art-book-tags'
 
 const BOOKS_PER_PAGE = 20
-
-function sortBooks(items: Book[], field: string): Book[] {
-  const sorted = [...items]
-  switch (field) {
-    case 'title':
-      return sorted.sort((a, b) => a.title.localeCompare(b.title))
-    case 'author':
-      return sorted.sort((a, b) => a.author[0].localeCompare(b.author[0]))
-    case 'year':
-      return sorted.sort((a, b) => (b.year ?? 0) - (a.year ?? 0))
-    case 'dateAdded':
-    default:
-      return sorted.sort((a, b) => b.dateAdded.localeCompare(a.dateAdded))
-  }
-}
 
 export function LibraryPage() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
@@ -37,25 +22,11 @@ export function LibraryPage() {
   const allTags = useMemo(() => Object.keys(bookTags).sort(), [])
 
   const filteredBooks = useMemo(() => {
-    let result = books
-
-    if (activeTags.size > 0) {
-      result = result.filter((book) =>
-        [...activeTags].every((tag) => book.tags.includes(tag)),
-      )
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase()
-      result = result.filter((book) =>
-        book.title.toLowerCase().includes(q) ||
-        book.author.some((a) => a.toLowerCase().includes(q)) ||
-        (book.publisher ?? '').toLowerCase().includes(q) ||
-        (book.notes ?? []).some((n) => n.text.toLowerCase().includes(q)),
-      )
-    }
-
-    return sortBooks(result, sortField)
+    return filterAndSortLibraryBooks(books, {
+      activeTags,
+      sortField,
+      searchQuery,
+    })
   }, [activeTags, sortField, searchQuery])
   const pageCount = Math.max(1, Math.ceil(filteredBooks.length / BOOKS_PER_PAGE))
   const currentPageBooks = useMemo(() => {

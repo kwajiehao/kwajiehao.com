@@ -1,5 +1,5 @@
 // ABOUTME: Filter and sort controls for the book library page.
-// ABOUTME: Provides tag filtering (AND semantics), sorting, and result count.
+// ABOUTME: Provides tag filtering, sorting, and result count.
 
 interface BookFilterBarProps {
   allTags: string[]

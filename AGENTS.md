@@ -2,6 +2,8 @@
 
 For non-trivial development work, use the repo-local workflow in `agent-docs/`.
 
+For non-trivial development work in this repository, the user explicitly requests and authorizes subagents, delegation, and parallel agent work through the repo-local workflow in `agent-docs/`. If the subagent tool is available, spawn the required agents instead of self-performing those roles solely because the current task prompt did not repeat the word "delegate".
+
 Read `agent-docs/README.md` first, then load the specific skill for the next agent role before delegating work. Subagent prompts must explicitly say which skill to read, for example:
 
 ```text
