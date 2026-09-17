@@ -11,6 +11,7 @@ import { AboutPage } from './pages/AboutPage.tsx'
 import { LibraryPage } from './pages/LibraryPage.tsx'
 import { PhotosPage } from './pages/PhotosPage.tsx'
 import { PhotoCollectionPage } from './pages/PhotoCollectionPage.tsx'
+import { RochesterCatCarePage } from './pages/RochesterCatCarePage.tsx'
 
 export function App() {
   return (
@@ -23,6 +24,7 @@ export function App() {
           <Route path="/library" component={LibraryPage} />,
           <Route path="/photos" component={PhotosPage} />,
           <Route path="/photos/:slug" component={PhotoCollectionPage} />,
+          <Route path="/rochester-cat-care" component={RochesterCatCarePage} />,
           <Route path="/tags" component={TagIndexPage} />,
           <Route path="/tags/:tag" component={TagPage} />,
           <Route path="/about" component={AboutPage} />,

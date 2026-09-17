@@ -53,7 +53,6 @@ export default function rssFeedPlugin(): Plugin {
 
       const feed = new Feed({
         title: "Kwa Jie Hao's blog",
-        description: 'Thoughts on engineering, AI, and things I find interesting.',
         id: SITE_URL,
         link: SITE_URL,
         language: 'en',
